@@ -1,0 +1,15 @@
+<?php 
+/*
+ * uses: resource_type, resource_id, is_reported, resource_owner_name, add_report_form Zend_Form
+ */
+?>
+
+<?php if ($this->HasIdentity() 
+		&& $this->resource_owner_name != $this->GetCurrentUserData('name')
+		&& !$this->is_reported):?>
+
+<a class="report-btn popover-trigger <?php echo $this->class;?>" 
+data-resource-id="<?php echo $this->resource_id;?>" data-resource-type="<?php echo $this->resource_type;?>" 
+title="<?php echo $this->translate('Request a Review');?>"><?php echo $this->btn_title;?></a>
+
+<?php endif;?>

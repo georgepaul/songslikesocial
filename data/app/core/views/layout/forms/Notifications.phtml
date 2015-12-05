@@ -1,0 +1,18 @@
+<form action="<?php echo $this->escape($this->element->getAction()) ?>" method="<?php echo $this->escape($this->element->getMethod()) ?>" id="<?php echo $this->element->getId(); ?>">
+
+<?php echo $this->element->identifier; ?>
+
+<?php foreach($this->element as $element):?>
+<?php if ($element->getId() == 'submitbtn' || $element->getId() == 'identifier') continue;?>
+<div class="form-group <?php echo $element->getId();?>">
+<label for="<?php echo $element->getId();?>"><?php echo $element->getLabel(); ?></label>
+<?php echo $element->render(); ?>
+</div>
+<hr />
+<?php endforeach;?>
+
+<div class="pull-right">
+<?php echo $this->element->submitbtn; ?>
+</div>
+
+</form>

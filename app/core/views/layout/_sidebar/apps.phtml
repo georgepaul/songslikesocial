@@ -1,0 +1,9 @@
+<?php if (isset($this->sidebar_apps) && !empty($this->sidebar_apps)):?>
+<div class="well sidebarbox">
+	<div class="sb-title">
+		<span><?php echo $this->translate('Apps');?></span>
+	</div>
+	
+	<?php Zend_Registry::get('hooks')->trigger('hook_view_sidebar_apps', $this); ?>
+</div>
+<?php endif;?>

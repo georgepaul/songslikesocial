@@ -1,0 +1,20 @@
+<form class="validate-ajax"  action="<?php echo $this->escape($this->element->getAction());?>" method="<?php echo $this->escape($this->element->getMethod());?>" id="<?php echo $this->element->getId();?>">
+
+<?php echo $this->element->identifier; ?>
+<?php echo $this->element->csrf; ?>
+
+<div>
+
+<div class="form-group <?php echo $this->element->comment->getId();?>">
+<?php echo $this->element->comment;?>
+</div>
+
+<hr />
+         
+<div class="pull-right">
+<?php echo $this->element->submitcomment; ?>
+</div>
+
+</div>
+
+</form>

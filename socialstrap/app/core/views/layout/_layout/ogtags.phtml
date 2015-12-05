@@ -1,0 +1,51 @@
+<?php 
+$title = Zend_Registry::get('config')->get('network_name');
+$description = Zend_Registry::get('config')->get('network_description');
+$url = Application_Plugin_Common::getFullBaseUrl();
+$image = '';
+
+// share profile page
+if (isset($this->profile_data)) {
+
+	$title = $this->profile_data->screen_name;
+	$image = $this->GetStorageUrl('cover') . $this->profile_data->cover;
+	$url = Application_Plugin_Common::getFullBaseUrl().'/'.$this->profile_data->name;
+
+	if ($this->php_controller == 'profiles' && isset($this->profile_data->meta_values['description']) && $this->profile_data->meta_values['description']) {
+		$description = $this->escape($this->profile_data->meta_values['description']);
+	}
+
+}
+
+// share ONLY public post
+if ($this->php_action == 'showpost' && isset($this->posts_data[0]) && $this->posts_data[0]['post_privacy'] == 'public') {
+	
+	$url = Application_Plugin_Common::getFullBaseUrl().'/profiles/showpost/name/'.$this->posts_data[0]['post_wall_name'].'/post/'.$this->posts_data[0]['post_id'];
+	
+	$title = $this->posts_data[0]['user_screen_name'];
+
+	$post_content = $this->escape(Application_Plugin_Common::mbsubstr($this->posts_data[0]['post_content'], 0, 300, 'utf-8'));
+	
+	if ($post_content) {
+		$description = $post_content;
+	}
+	
+	if (isset($this->posts_data[0]['post_images'][0]['file_name'])) {
+		$image = $this->GetStorageUrl('posts').$this->posts_data[0]['post_images'][0]['file_name'];
+	}
+}
+
+echo "\n";
+echo '<meta property="og:type" content="website"/>';
+echo "\n";
+echo '<meta property="og:url" content="'.htmlentities($url).'"/>';
+echo "\n";
+echo '<meta property="og:site_name" content="'.Zend_Registry::get('config')->get('network_name').'"/>';
+echo "\n";
+echo '<meta property="og:title" content="'.$title.'"/>';
+echo "\n";
+echo '<meta property="og:description" content="'.$description.'"/>';
+echo "\n";
+
+if ($image) echo '<meta property="og:image" content="'.htmlentities($image).'"/>';
+	

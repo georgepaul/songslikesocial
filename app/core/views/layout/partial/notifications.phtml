@@ -1,0 +1,28 @@
+<?php if (isset($this->notifications) && !empty($this->notifications)) foreach($this->notifications as $notification):?>
+
+<?php if (isset($notification['skip'])) continue;?>
+<div>
+
+	<div class="avatar small pull-left">
+		<a href="<?php echo $this->baseUrl().'/'.$notification['view_from_name'];?>">
+			<img src="<?php echo $this->GetStorageUrl('avatar').$notification['view_from_avatar'];?>">
+		</a>
+	</div>
+	
+	<div class="media-body">
+		<div>
+			<div>
+			<?php echo $notification['html_link'];?>
+			</div>			
+			<div class="pull-right">
+				<span><?php echo $this->GetTimeElapsedString($notification['notification_date']);?></span>
+			</div>
+		
+		</div>
+
+	</div>
+
+</div>		
+<hr /> 
+<?php endforeach;?>
+

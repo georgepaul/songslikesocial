@@ -1,0 +1,11 @@
+<?php
+$session = new Zend_Session_Namespace('Default');
+if (Zend_Registry::get('config')->get('motd') && APPLICATION_ENV != 'safe' && $session->motd != serialize(Zend_Registry::get('config')->get('motd'))):?>
+<div class="row motd">
+	<div class="col-md-12">
+		<div class="alert alert-success close-motd"><button data-dismiss="alert" class="close" type="button">&times;</button>
+			<?php echo Zend_Registry::get('config')->get('motd');?>
+		</div>
+	</div>
+</div>
+<?php endif;?>

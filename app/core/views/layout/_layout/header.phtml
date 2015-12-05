@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="<?php echo Zend_Registry::get('Zend_Translate')->getLocale()?>">
+<head>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
+	<meta charset="utf-8">
+	<meta content="socialstrap" name="generator">
+	<link rel="shortcut icon" href="<?php echo $this->baseUrl()?>/images/favicon.ico" />
+	
+	<?php // HTML5 Shim (IE) ?>
+	<!--[if lt IE 9]><script src="<?php echo $this->baseUrl()?>/include/html5shiv/dist/html5shiv.js"></script><![endif]-->
+	
+	<?php // jQuery ?>
+	<script type="text/javascript" src="<?php echo $this->baseUrl()?>/include/jQuery/jquery-1.11.1.min.js"></script>
+
+	<?php // bootstrap js ?>
+	<script src="<?php echo $this->baseUrl()."/bootstrap/js/bootstrap.min.js"."?".APP_VERSION?>"></script>
+	
+	<?php // php2js vars ?>
+	<?php echo $this->render('_layout/php2js.phtml');?>
+	
+	<?php // ogtags ?>
+	<?php echo $this->render('_layout/ogtags.phtml');?>
+		
+	<?php // common site-wide js ?>
+	<script src="<?php echo $this->baseUrl()."/js/common.js"."?".APP_VERSION?>"></script>
+
+	<?php // blueimp plugin ?>
+	<?php echo $this->render('_layout/blueimp.phtml');?>
+	
+	<?php // jcrop plugin ?>
+	<?php if (isset($this->jcrop)) echo $this->render('_layout/jcrop.phtml');?>
+	
+	<?php // colorpicker plugin ?>
+	<?php if (isset($this->load_colorpicker)) echo $this->render('_layout/colorpicker.phtml');?>
+	
+	<?php // main theme css ?>
+	<?php if (Zend_Registry::get('config')->get('css_theme') && file_exists(PUBLIC_PATH . Zend_Registry::get('config')->get('css_theme'))):?>
+	<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl() . Zend_Registry::get('config')->get('css_theme')."?".APP_VERSION?>">
+	<?php else:?>
+	<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl() . "/bootstrap/css/bootstrap.min.css"."?".APP_VERSION?>">
+	<?php endif;?>
+
+	<?php // wide layout config ?>
+	<?php if (!Zend_Registry::get('config')->get('wide_layout')):?>
+	<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl()."/css/responsive-fix.css"."?".APP_VERSION?>">
+	<?php endif;?>
+	
+	<?php // application css ?>
+	<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl()."/css/ie-fix.css"."?".APP_VERSION?>">
+	<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl()."/css/style.css"."?".APP_VERSION?>">
+	
+	<?php if (APPLICATION_ENV != 'safe'):?>
+		<?php // background css config ?>
+		<?php echo $this->render('_layout/background.phtml');?>
+	
+		<?php // custom user css from settings ?>
+		<style type="text/css"><?php echo Zend_Registry::get('config')->get('css_custom')?></style>
+	
+		<?php // custom head from settings global/profile pages ?>
+		<?php echo ($this->custom_head ? $this->custom_head : '')?>
+	
+		<?php // common head code for all pages ?>
+		<?php echo (Zend_Registry::get('config')->get('common_head') ? Zend_Registry::get('config')->get('common_head') : '')?>
+	<?php endif;?>
+	
+	<?php // rel="prev" and rel="next" seo links ?>
+	<?php if (isset($this->post_page_number) || (isset($this->pagination_last_page) && $this->pagination_last_page > 1) || (isset($this->posts_data) && !empty($this->posts_data))):?>
+
+		<?php
+		// get uri for scroll/offset links
+		$controller = Zend_Controller_Front::getInstance()->getRequest()->getControllerName();
+		$action = Zend_Controller_Front::getInstance()->getRequest()->getActionName();
+		$uri = $this->baseUrl().'/';
+		switch ($controller .'/'. $action) {
+			case 'search/posts':
+			case 'search/timeline':
+			case 'index/index':
+				// no real search allowed for bots - no term=?
+				$uri .= $controller .'/'. $action .'/?scroll_offset=';
+				$prev_page = $this->post_page_number >= 2 ? (int)$this->post_page_number - 2 : null;
+				$next_page = (int)$this->post_page_number;
+				$last_page = $next_page + 1;
+				if (count($this->posts_data) < Zend_Registry::get('config')->get('limit_posts')) $last_page = 0;
+			break;
+			case 'profiles/show':
+				$uri .= $this->profile_data->name .'/?scroll_offset=';
+				$prev_page = $this->post_page_number >= 2 ? (int)$this->post_page_number - 2 : null;
+				$next_page = (int)$this->post_page_number;
+				$last_page = $next_page + 1;
+				if (count($this->posts_data) < Zend_Registry::get('config')->get('limit_posts')) $last_page = 0;
+			break;
+			default:
+				$uri .= $controller .'/'. $action .'/page/';
+				$prev_page = (int)$this->pagination_current_page >= 2 ? (int)$this->pagination_current_page - 1 : null;
+				$next_page = (int)$this->pagination_current_page + 1;
+				$last_page = (int)$this->pagination_last_page;
+			break;
+		}
+		?>
+		
+		<?php if ($prev_page !== null):?>
+		<link rel="prev" href="<?php echo $uri.$prev_page;?>" />
+		<?php endif;?>
+		
+		<?php if ($next_page <= $last_page):?>
+		<link rel="next" href="<?php echo $uri.($next_page > 0 ? $next_page : 1);?>" />
+		<?php endif;?>
+	
+	<?php endif;?>
+	
+	<?php Zend_Registry::get('hooks')->trigger('view_head', $this); ?>
+
+</head>

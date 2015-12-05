@@ -1,0 +1,27 @@
+<form class="validate-ajax" action="<?php echo $this->escape($this->element->getAction()) ?>" method="<?php echo $this->escape($this->element->getMethod()) ?>" id="<?php echo $this->element->getId(); ?>">
+
+<?php echo $this->element->identifier; ?>
+<?php echo $this->element->csrf; ?>
+
+<div class="form-group <?php echo $this->element->regname->getId();?>">
+<label for="<?php echo $this->element->regname->getId();?>"><?php echo $this->element->regname->getLabel(); ?></label>
+<?php echo $this->element->regname;?>
+</div>
+
+<div class="form-group <?php echo $this->element->regemail->getId();?>">
+<label for="<?php echo $this->element->regemail->getId();?>"><?php echo $this->element->regemail->getLabel(); ?></label>
+<?php echo $this->element->regemail;?>
+</div>
+
+
+<div class="form-group <?php echo $this->element->regpassword->getId();?>">
+<label for="<?php echo $this->element->regpassword->getId();?>"><?php echo $this->element->regpassword->getLabel(); ?></label>
+<?php echo $this->element->regpassword;?>
+</div>
+
+<div class="form-group <?php echo $this->element->registerbtn->getId();?>">
+<span class="pull-right"><?php echo $this->element->registerbtn; ?></span>
+</div>
+
+
+</form>

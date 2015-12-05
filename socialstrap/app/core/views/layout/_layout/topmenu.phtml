@@ -1,0 +1,139 @@
+<?php $acl = new Application_Plugin_AccessCheck();?>
+<div id="topmenu" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	<div class="container">
+
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target=".navbar-ex1-collapse">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<h1>
+			<?php if (Zend_Registry::get('config')->get('logo_image')):?>
+			<a href="<?php echo $this->baseUrl()?>/" class="navbar-brand image pull-left">
+			<img class="img-responsive" src="<?php echo $this->baseUrl().'/images/'.Zend_Registry::get('config')->get('logo_image')?>">
+			</a>
+			<?php else:?>
+			<a href="<?php echo $this->baseUrl()?>/" class="navbar-brand pull-left">
+			<span><?php echo Zend_Registry::get('config')->get('network_name');?></span>
+			</a>
+			<?php endif;?>
+			</h1>
+
+			<?php if ($this->HasIdentity()):?>
+			<ul class="nav navbar-nav">
+				<li class="notifier">
+				<a href="<?php echo $this->baseUrl()?>/messages/inbox">
+					<span class="glyphicon glyphicon-envelope"></span> <span class="label <?php echo ($this->new_messages_count > 0 ? 'label-danger' : 'label-default');?> new-messages-count"><?php echo $this->new_messages_count;?></span>
+				</a>
+				<a class="notifications" class="notifications"><i class="glyphicon glyphicon-info-sign"></i>
+					<span class="label <?php echo ($this->notifications_count > 0 ? 'label-danger' : 'label-default');?>"><?php echo $this->notifications_count;?></span>
+				</a>
+				</li>
+			</ul>
+			<?php endif;?>
+		</div>
+
+		<div class="collapse navbar-collapse navbar-ex1-collapse">
+			<ul class="nav navbar-nav navbar-search">
+
+				<li>
+					<form class="navbar-form navbar-left" method="get"
+						action="<?php echo $this->baseUrl()?>/search/<?php echo (isset($this->search_category) ? $this->search_category : 'users')?>/"
+						role="search">
+						<div class="form-group">
+							<input type="text" class="form-control"
+								placeholder="<?php echo $this->translate('Search');?>"
+								id="term" name="term">
+						</div>
+					</form>
+				</li>
+
+			</ul>
+			
+			<ul class="nav navbar-nav navbar-right">
+				<?php if ($this->HasIdentity()):?>
+				<li class="dropdown">
+					<a data-toggle="dropdown" class="dropdown-toggle" href="#"><?php echo $this->GetCurrentUserData('screen_name')?>
+						<b class="caret"></b>
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<a href="<?php echo $this->baseUrl().'/'.$this->GetCurrentUserData('name')?>"><?php echo $this->translate('My Profile');?></a>
+						</li>
+						<li>
+							<a href="<?php echo $this->baseUrl()?>/editprofile/edit"><?php echo $this->translate('Edit Profile');?></a>
+						</li>
+						<li class="divider"></li>
+						<li>
+							<a href="<?php echo $this->baseUrl()?>/messages/inbox"><?php echo $this->translate('Messages');?></a>
+						</li>
+						<li>
+							<a href="<?php echo $this->baseUrl()?>/notifications/list"><?php echo $this->translate('Notifications');?></a>
+						</li>
+						<li>
+							<a href="<?php echo $this->baseUrl()?>/search/posts"><?php echo $this->translate('Search');?></a>
+						</li>
+						
+						<?php if ($acl->acl->isAllowed(Zend_Registry::get('role'), 'managegroups') || $acl->acl->isAllowed(Zend_Registry::get('role'), 'managepages')):?>
+						<li class="divider"></li>
+						<?php endif;?>
+
+						<?php if ($acl->acl->isAllowed(Zend_Registry::get('role'), 'managegroups')):?>
+						<li>
+							<a href="<?php echo $this->baseUrl()?>/editprofile/listgroups"><?php echo $this->translate('My Groups');?></a>
+						</li>
+						<?php endif;?>
+						
+						<?php if ($acl->acl->isAllowed(Zend_Registry::get('role'), 'managepages')):?>
+						<li>
+							<a href="<?php echo $this->baseUrl()?>/editprofile/listpages"><?php echo $this->translate('My Pages');?></a>
+						</li>
+						<?php endif;?>
+
+						<?php if ($this->HasRole('admin') || $this->HasRole('reviewer')):?>
+						<li class="divider"></li>
+						<?php if ($this->HasRole('admin')):?>
+						<li>
+							<a href="<?php echo $this->baseUrl()?>/admin/settings/"><?php echo $this->translate('Settings');?></a>
+						</li>
+						<li>
+							<a href="<?php echo $this->baseUrl()?>/admin/addons/"><?php echo $this->translate('Addons');?></a>
+						</li>
+						<li class="divider"></li>
+						<?php endif;?>
+
+						<?php if ($this->HasRole('admin') || $this->HasRole('reviewer')):?>
+						<li>
+							<a href="<?php echo $this->baseUrl()?>/reports/reviewposts"><?php echo $this->translate('Reviews');?></a>
+						</li>
+						<?php endif;?>
+
+						<?php endif;?>
+
+						<li class="divider"></li>
+						<li>
+							<a href="<?php echo $this->baseUrl()?>/index/logout"><?php echo $this->translate('Sign out');?></a>
+						</li>
+
+					</ul>
+				</li>
+				<?php else:?>
+				<li>
+					<a href="#login-modal" data-toggle="modal"><?php echo $this->translate('Sign in');?></a>
+				</li>
+				<?php endif;?>
+			</ul>
+			
+						
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<a href="<?php echo $this->baseUrl()?>/" data-toggle="modal"><?php echo $this->translate('Home');?></a>
+				</li>
+			</ul>
+
+		</div>
+
+	</div>
+</div>

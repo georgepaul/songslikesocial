@@ -1,0 +1,14 @@
+<form class="add-message-from" action="<?php echo $this->escape($this->element->getAction()) ?>" method="<?php echo $this->escape($this->element->getMethod()) ?>">
+
+<?php echo $this->element->identifier; ?>
+
+<div class="form-group add-comment-input <?php echo $this->element->content->getId();?>">
+<?php echo $this->element->content;?>
+</div>
+
+<div class="add-comment-submit-btn">
+<?php echo $this->element->submitmessage; ?>
+</div>
+
+
+</form>

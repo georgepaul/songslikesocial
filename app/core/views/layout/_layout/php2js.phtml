@@ -1,0 +1,20 @@
+<script type="text/javascript">
+	var post_page_number = <?php echo (isset($this->post_page_number) ? $this->post_page_number : 2)?>;
+	var php_hasIdentity = <?php echo ($this->HasIdentity() ? 1 : 0);?>;
+	var php_baseURL = '<?php echo $this->baseUrl();?>';
+	var php_postsstorageURL = '<?php echo $this->GetStorageUrl('posts');?>';
+	var php_autoLoadImage = '<?php echo $this->auto_show_image;?>';
+	var php_controller = '<?php echo $this->php_controller;?>';
+	var php_action = '<?php echo $this->php_action;?>';
+	var php_loadPostURL = <?php echo (isset($this->php_loadPostURL) ? "'".$this->php_loadPostURL."'" : 'false')?>;
+	var php_heartbeatFreq = <?php echo ($this->HasIdentity() ? Zend_Registry::get('config')->get('heartbeatfreq') * 1000 : 0)?>;
+	var php_disableAjaxValidator = <?php echo Zend_Registry::get('config')->get('disable_ajax_validator') ? 1 : 0?>;
+	var php_jcropSetSelectX = 104;
+	var php_jcropSetSelectY = 104;
+	var php_jcropSetAspectRatio = <?php echo (isset($this->php_jcropSetAspectRatio) ? $this->php_jcropSetAspectRatio : 1)?>;
+	var php_facebookAppId = '<?php echo Zend_Registry::get('config')->get('facebook_appid');?>';
+	var php_maxFileUploadSize = <?php echo Zend_Registry::get('config')->get('max_file_upload_size')?>;
+	var php_maxImagesPerPost = <?php echo Zend_Registry::get('config')->get('max_images_per_post')?>;
+	var php_language = '<?php echo Zend_Registry::get('Zend_Translate')->getLocale()?>';
+	var notifications = {'count' : <?php echo (isset($this->notifications_count) ? (int)$this->notifications_count : 0)?>, 'html' : '', 'new_messages' : <?php echo (isset($this->new_messages_count) ? (int)$this->new_messages_count : 0)?>};
+</script>

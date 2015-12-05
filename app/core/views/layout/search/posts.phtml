@@ -1,0 +1,5 @@
+<div id="posts-wrapper">
+<?php echo $this->render('/partial/posts.phtml');?>
+</div>
+
+<?php echo $this->partial('/partial/pagination.phtml', array('pagination_last_page' => $this->pagination_last_page,'pagination_current_page' => $this->pagination_current_page));?>

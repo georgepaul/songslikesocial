@@ -1,0 +1,10 @@
+<?php if (isset($this->sidebar_friends) && !empty($this->sidebar_friends)):?>
+<div class="well sidebarbox">
+	<div class="sb-title">
+		<a href="<?php echo $this->baseUrl()?>/profiles/friends/name/<?php echo $this->profile_data->name;?>"><?php echo $this->translate('Friends');?></a>
+		<span class="sidebar-count"><?php echo $this->sidebar_friends_count;?></span>
+	</div>
+	
+	<?php echo $this->partial('/partial/profiles_sidebar.phtml', array('profiles' => $this->sidebar_friends));?>
+</div>
+<?php endif;?>

@@ -1,0 +1,37 @@
+files updated since v1.3:
+
+addons/hashtags/hooks.php
+addons/hashtags/init.php
+
+addons/youtubeposts/hooks.php
+addons/youtubeposts/init.php
+app/core/controllers/CommentsController.php
+app/core/controllers/IndexController.php
+app/core/controllers/MessagesController.php
+app/core/forms/ActivateAccount.php
+app/core/forms/AddComment.php
+app/core/forms/AddPost.php
+app/core/forms/SettingsGeneral.php
+app/core/languages/en.php
+app/core/models/Comments.php
+app/core/models/Posts.php
+app/core/models/Profiles.php
+app/core/plugins/AccessCheck.php
+app/core/plugins/Common.php
+app/core/plugins/GlobalDisplay.php
+app/core/views/layout/_layout/end.phtml
+app/core/views/layout/_layout/header.phtml
+app/core/views/layout/comments/
+app/core/views/layout/comments/edit.phtml
+app/core/views/layout/layout.phtml
+app/core/views/layout/partial/comments.phtml
+css/style.css
+documentation.pdf
+version.php
+
+
+new files:
+
+addons/ogtags/
+addons/ogtags/hooks.php
+addons/ogtags/init.php

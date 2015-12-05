@@ -1,0 +1,10 @@
+
+<?php if (count(Zend_Registry::get('languages_array')) > 1):?>
+<div class="center-text-block">
+<small>
+<?php foreach(Zend_Registry::get('languages_array') as $key => $value):?>
+<a href="<?php echo $this->baseUrl().'/index/language/code/'.$key?>"><?php echo $value;?></a>
+<?php endforeach;?>
+</small>
+</div>
+<?php endif;?>

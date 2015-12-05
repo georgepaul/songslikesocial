@@ -1,0 +1,16 @@
+<?php if (!$this->HasIdentity() && $this->sidebar_login):?>
+<div class="well sidebarbox">
+	<?php echo $this->login_form;?>
+	<?php echo $this->lostpassword_form;?>
+	<div class="clearfix"></div>
+</div>
+		
+<div class="well">
+	<div class="sb-title">
+		<span><?php echo $this->translate('Create Account');?></span>
+	</div>
+	
+	<?php echo $this->register_form;?>
+	<div class="clearfix"></div>
+</div>
+<?php endif;?>

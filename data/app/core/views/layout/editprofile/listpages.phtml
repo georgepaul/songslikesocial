@@ -1,0 +1,57 @@
+<div class="well">
+<div class="pull-right">
+	<a href="<?php echo $this->baseUrl().'/editprofile/createpage/pageaction/1'?>" class="btn btn-primary" type="button">
+	<?php echo $this->translate('Create a page');?>
+	</a>
+</div>
+</div>
+
+<?php if (isset($this->pages) && !empty($this->pages)) foreach($this->pages as $page):?>
+<div class="well">
+
+	<div class="media-body">
+		<div class="avatar large pull-left">
+			<a href="<?php echo $this->baseUrl().'/'.$page['name'];?>">
+				<img src="<?php echo $this->GetStorageUrl('avatar').$page['avatar'];?>">
+			</a>
+		</div>
+
+		<h4 class="media-heading">
+		<a
+			href="<?php echo $this->baseUrl().'/'.$page['name'];?>"
+			class="pull-left"><?php echo $page['screen_name'];?>
+		</a>
+		
+		</h4>
+	
+	</div>
+	
+	<hr />
+		
+	<div class="pull-right">
+		<a href="<?php echo $this->baseUrl().'/editprofile/setprofilepicture/pageaction/1/name/'.$page['name'];?>" class="btn btn-default" type="button">
+		<?php echo $this->translate('Profile Picture');?>
+		</a>
+		<a href="<?php echo $this->baseUrl().'/editprofile/setcoverpicture/pageaction/1/name/'.$page['name'];?>" class="btn btn-default" type="button">
+		<?php echo $this->translate('Cover Picture');?>
+		</a>
+
+		<?php if ((Zend_Registry::get('config')->get('user_background') && $this->hasRole('user'))
+					|| (Zend_Registry::get('config')->get('subscriber_background') && $this->hasRole('subscriber'))
+					|| $this->hasRole('reviewer') 
+					|| $this->hasRole('admin')):?>
+		<a href="<?php echo $this->baseUrl().'/editprofile/setbackgroundpicture/pageaction/1/id/'.$page['id'];?>" class="btn btn-default" type="button">
+		<?php echo $this->translate('Background');?>
+		</a>
+		<?php endif;?>
+		
+		<a href="<?php echo $this->baseUrl().'/editprofile/editpage/pageaction/1/name/'.$page['name'];?>" class="btn btn-primary" type="button">
+		<?php echo $this->translate('Edit');?>
+		</a>
+	</div>
+
+
+</div>
+<?php endforeach;?>
+
+<?php echo $this->partial('/partial/pagination.phtml', array('pagination_last_page' => $this->pagination_last_page,'pagination_current_page' => $this->pagination_current_page));?>

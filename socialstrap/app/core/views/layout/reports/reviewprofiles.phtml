@@ -1,0 +1,52 @@
+<?php if (isset($this->resources) && !empty($this->resources)) foreach($this->resources as $profile):?>
+<div class="well single-report">
+
+	<div class="media-body">
+	
+		<div class="avatar small pull-left">
+			<a href="<?php echo $this->baseUrl().'/'.$profile['reported_name'];?>">
+				<img src="<?php echo $this->GetStorageUrl('avatar') . $profile['reported_avatar'];?>">
+			</a>
+		</div>
+	
+		<h5 class="media-heading">
+		
+		<a
+			href="<?php echo $this->baseUrl().'/'.$profile['reported_name'];?>"
+			class="pull-left"><?php echo $profile['reported_screen_name'];?>
+		</a> 
+			
+		</h5>
+		
+		
+	
+	</div>
+	
+	<hr />
+	
+	<div class="pull-left">
+	<p><?php echo $profile['reason'];?></p>
+	</div>
+	
+	<div class="pull-right">
+		<div class="avatar small pull-left">
+			<a href="<?php echo $this->baseUrl().'/'.$profile['reported_by_name'];?>">
+				<img src="<?php echo $this->GetStorageUrl('avatar') . $profile['reported_by_avatar'];?>">
+			</a>
+		</div>
+		<a href="<?php echo $this->baseUrl().'/'.$profile['reported_by_name'];?>"><?php echo $profile['reported_by_screen_name'];?></a>
+	<?php echo $this->GetTimeElapsedString($profile['report_date']);?> 
+	</div>
+	
+	<div class="clearfix"></div>
+	
+	<div class="pull-right">
+	 <a data-mark-reported="0" data-report-id="<?php echo $profile['id'];?>" class="btn btn-default admin-reported-btn"><?php echo $this->translate('Ignore');?></a>
+	 <a data-mark-reported="1" data-report-id="<?php echo $profile['id'];?>" class="btn btn-warning admin-reported-btn"><?php echo $this->translate('Block');?></a>
+	</div>
+
+
+</div>
+<?php endforeach;?>
+
+<?php echo $this->partial('/partial/pagination.phtml', array('pagination_last_page' => $this->pagination_last_page,'pagination_current_page' => $this->pagination_current_page));?>

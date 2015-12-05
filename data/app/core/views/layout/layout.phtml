@@ -1,0 +1,47 @@
+<?php echo $this->render('_layout/header.phtml');?>
+
+<body>
+
+<?php echo $this->render('_layout/topmenu.phtml');?>
+
+<div class="container main">
+
+<?php echo $this->render('_layout/motd.phtml');?>
+
+<div class="row">
+
+	<div class="col-md-12 top_banner">
+	<?php echo (Zend_Registry::get('config')->get('top_banner') && APPLICATION_ENV != 'safe' ? Zend_Registry::get('config')->get('top_banner') : '')?>
+	</div>
+	
+	<div class="col-md-12 cover">
+	<?php if (isset($this->user_cover) && $this->user_cover) echo $this->render('partial/cover.phtml');?>
+	</div>
+
+	<div class="col-md-4 sidebar">
+		<?php echo $this->render('sidebar.phtml');?>
+	</div>
+	
+	<div class="col-md-8 main-content">
+		<?php echo $this->render('partial/alerts.phtml');?>
+	
+		<div class="middle_banner">
+			<?php echo (Zend_Registry::get('config')->get('middle_banner') && APPLICATION_ENV != 'safe' ? Zend_Registry::get('config')->get('middle_banner') : '')?>
+		</div>
+		
+		<div class="rel">
+			<div id="read"></div>
+			<div id="read-anchor"></div>
+		</div>
+		<?php echo $this->layout()->content; ?>
+	</div>
+	
+</div>
+
+</div> <!-- end container -->
+
+<?php echo $this->render('_layout/modals.phtml');?>
+<?php echo $this->render('_layout/end.phtml');?>
+
+
+ 

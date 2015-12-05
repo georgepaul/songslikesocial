@@ -1,0 +1,17 @@
+<?php if (isset($this->post_images) && !empty($this->post_images)):?>
+
+<div class="no-margin">
+<?php foreach ($this->post_images as $image):?>
+
+<div class="well-images col-xs-12 <?php echo count($this->post_images) == 1 ? "col-sm-12 col-md-12" : "col-sm-6 col-md-6"?>">
+    <a href="#lightbox-modal" data-toggle="modal" class="thumbnail <?php if (count($this->post_images) == 1) echo "thumbnail-single"?>" data-context="post" data-resource-id="<?php echo $image['image_id']?>">
+      <img src="<?php echo $this->GetStorageUrl('posts').$image['file_name']?>">
+      <div class="img-helper"></div>
+    </a>
+</div>
+
+<?php endforeach;?>
+</div>
+
+<br />
+<?php endif;?>

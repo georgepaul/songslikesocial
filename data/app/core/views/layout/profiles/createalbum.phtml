@@ -1,0 +1,12 @@
+<?php echo $this->partial('/partial/images_submenu.phtml', array(
+		'profile_data' => $this->profile_data,
+		'total_images' => $this->total_images,
+		'total_albums' => $this->total_albums,
+		'action' => 'create_album',
+		'active_item' => 'new',
+		'active_item_id' => (isset($this->active_item_id) ? $this->active_item_id : 0)
+		));?>
+		
+<div class="well">
+	<?php echo $this->album_form;?>
+</div>

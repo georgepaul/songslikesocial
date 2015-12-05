@@ -1,0 +1,51 @@
+<form action="<?php echo $this->escape($this->element->getAction()) ?>" method="<?php echo $this->escape($this->element->getMethod()) ?>" id="<?php echo $this->element->getId(); ?>">
+
+<?php $random_string = $this->GetRandomNum();?>
+<input type="hidden" id="form_unique_key" value="<?php echo $random_string;?>" name="form_unique_key">
+
+<?php echo $this->element->identifier; ?>
+<?php echo $this->element->csrf; ?>
+
+<div class="form-group <?php echo $this->element->content->getId();?>">
+<?php echo $this->element->content;?>
+</div>
+
+<div class="pull-left">
+<span class="btn btn-default btn-file">
+	<span><?php echo $this->translate('Add images...');?></span>
+	<input type="file" name="files[]" multiple>
+</span>
+</div>
+
+<div class="pull-right">
+
+<?php if ($this->element->show_privacy):?>
+<?php $privacy_array = Zend_Registry::get('post_privacy_array');?>
+
+<div class="btn-group dropup change-privacy">
+
+<button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
+	<span class="current-privacy-level"><?php echo $privacy_array[Zend_Registry::get('default_privacy')];?></span> <span class="caret"></span>
+</button>
+
+ <ul class="dropdown-menu pull-right">
+  <?php foreach ($privacy_array as $key => $value):?>
+  <li><a data-privacy="<?php echo $key;?>"><?php echo $value;?></a></li>
+  <?php endforeach;?>
+ </ul>
+</div>
+<?php endif;?>
+
+<?php echo $this->element->submitbutton; ?>
+</div>
+
+</form>
+
+<div class="clearfix"></div>
+
+<?php echo $this->partial('/partial/file_upload.phtml', array(
+		'target_element' => '#'.$this->element->getId(),
+		'url' => $this->baseUrl().'/fileupload/receivefile/to/tmp/',
+		'random_string' => $random_string
+		));?>
+

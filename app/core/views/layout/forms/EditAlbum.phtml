@@ -1,0 +1,24 @@
+<form class="validate-ajax" action="<?php echo $this->escape($this->element->getAction()) ?>" method="<?php echo $this->escape($this->element->getMethod()) ?>" id="<?php echo $this->element->getId(); ?>">
+
+<?php echo $this->element->identifier; ?>
+
+<?php foreach($this->element as $element):?>
+<?php if ($element->getId() == 'formsubmit' || $element->getId() == 'identifier' || $element->getId() == 'id' || $element->getId() == 'is_hidden') continue;?>
+<div class="form-group <?php echo $element->getId();?>">
+<label for="<?php echo $element->getId();?>"><?php echo $element->getLabel(); ?></label>
+<?php echo $element->render(); ?>
+</div>
+<?php endforeach;?>
+
+<div style="display:none">
+<?php echo $this->element->id;?>
+</div>
+
+
+<hr/>
+
+<div class="pull-right">
+<span><?php echo $this->element->formsubmit; ?></span>
+</div>
+
+</form>

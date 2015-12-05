@@ -1,0 +1,21 @@
+<script type="text/javascript" src="<?php echo $this->baseUrl()?>/include/colorpicker/js/colorpicker.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->baseUrl()?>/include/colorpicker/css/colorpicker.css">
+<script type="text/javascript">
+/**
+ * Colorpicker init
+ */
+$(document).ready(function(){
+	$('.colorpicker-input').ColorPicker({
+		onSubmit: function(hsb, hex, rgb, el) {
+			$(el).val(hex);
+			$(el).ColorPickerHide();
+		},
+		onBeforeShow: function () {
+			$(this).ColorPickerSetColor(this.value);
+		}
+	})
+	.bind('keyup', function(){
+		$(this).ColorPickerSetColor(this.value);
+	});
+});
+</script>

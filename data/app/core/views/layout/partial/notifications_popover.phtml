@@ -1,0 +1,7 @@
+<div class="notification-popover-content">
+
+<?php echo $this->partial('/partial/notifications.phtml', array('notifications' => $this->notifications));?>
+
+<a href="<?php echo $this->baseUrl().'/notifications/list';?>"><?php echo $this->translate('See all notifications');?></a>
+
+</div>

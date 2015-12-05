@@ -1,0 +1,32 @@
+<?php echo $this->render('_layout/header.phtml');?>
+
+<body>
+
+<?php echo $this->render('_layout/topmenu.phtml');?>
+
+<div class="container main">
+
+<?php echo $this->render('_layout/motd.phtml');?>
+
+	<div class="row widelayout">
+	
+		<div class="col-md-12">
+	
+			<div class="well">
+				<?php echo $this->render('partial/alerts.phtml');?>
+				<?php echo $this->layout()->content; ?>
+			</div>
+			
+			<div class="well footerbox">
+				<?php echo $this->render('/partial/footer.phtml');?>
+			</div>
+	
+		</div>
+	
+	</div>
+
+
+</div>  <!-- end container -->
+
+<?php echo $this->render('_layout/modals.phtml');?>
+<?php echo $this->render('_layout/end.phtml');?>

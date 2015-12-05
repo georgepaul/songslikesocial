@@ -1,0 +1,7 @@
+<?php if (isset($this->profiles) && !empty($this->profiles)) foreach ($this->profiles as $profile):?>
+<div class="avatar large pull-left" title="<?php echo $profile['screen_name']?>">
+	<a href="<?php echo $this->baseUrl()?>/<?php echo $profile['name']?>">
+		<img src="<?php echo $this->GetStorageUrl('avatar') . $profile['avatar']?>">
+	</a>
+</div>
+<?php endforeach;?>

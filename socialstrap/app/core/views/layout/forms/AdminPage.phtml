@@ -1,0 +1,23 @@
+<form action="<?php echo $this->escape($this->element->getAction()) ?>" method="<?php echo $this->escape($this->element->getMethod()) ?>" id="<?php echo $this->element->getId(); ?>">
+
+<?php echo $this->element->identifier; ?>
+
+<?php foreach($this->element as $element):?>
+<?php if ($element->getId() == 'formsubmit' || $element->getId() == 'identifier' || $element->getId() == 'is_hidden') continue;?>
+<div class="form-group <?php echo $element->getId();?>">
+<label for="<?php echo $element->getId();?>"><?php echo $element->getLabel(); ?></label>
+<?php echo $element->render(); ?>
+</div>
+<?php endforeach;?>
+
+<div class="checkbox <?php echo $this->element->is_hidden->getId();?>">
+<label for="<?php echo $this->element->is_hidden->getId();?>"><?php echo $this->element->is_hidden;?> <?php echo $this->element->is_hidden->getLabel(); ?></label>
+</div>
+
+<hr/>
+
+<div class="pull-right">
+<span><?php echo $this->element->formsubmit; ?></span>
+</div>
+
+</form>

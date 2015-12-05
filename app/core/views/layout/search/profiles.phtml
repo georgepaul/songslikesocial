@@ -1,0 +1,56 @@
+<?php if (isset($this->profiles) && !empty($this->profiles)) foreach($this->profiles as $profile):?>
+<div class="well">
+
+	<div class="media-body">
+	
+		<div class="avatar small pull-left">
+			<a href="<?php echo $this->baseUrl().'/'.$profile['name'];?>">
+				<img src="<?php echo $this->GetStorageUrl('avatar') . $profile['avatar'];?>">
+			</a>
+		</div>
+	
+		<h5 class="media-heading">
+		
+		<a
+			href="<?php echo $this->baseUrl().'/'.$profile['name'];?>"
+			class="pull-left"><?php echo $profile['screen_name'];?>
+		</a> 
+			
+		</h5>
+
+	</div>
+	
+	<?php if ($this->HasRole('admin')):?>
+		
+		<div class="pull-left">
+			<span class="label label-danger"><?php echo ($profile['is_hidden'] != 0 ? $this->translate('Hidden') : '');?></span>
+			
+			<?php if ($profile['type'] == 'user'):?>
+			<span class="label label-danger"><?php echo ($profile['activationkey'] != 'activated' ? $this->translate('Not Activated') : '');?></span>
+			<span class="label label-warning"><?php echo $this->translate($profile['role']);?></span>
+			<span class="label label-default"><?php $privacy_all = Zend_Registry::get('profile_privacy_all'); echo $this->translate($privacy_all[$profile['profile_privacy']]);?></span>
+			<?php endif;?>
+			
+			<?php if ($profile['type'] == 'group'):?>
+			<span class="label label-default"><?php $privacy_all = Zend_Registry::get('group_privacy_all'); echo $this->translate($privacy_all[$profile['profile_privacy']]);?></span>
+			<?php endif;?>
+			
+			<?php if ($profile['type'] == 'group' || $profile['type'] == 'page'):?>
+			<a href="<?php echo $this->baseUrl().'/'.$profile['owner_name'];?>"><span class="label label-default"><?php echo $profile['owner_screen_name'];?></span></a>
+			<?php endif;?>
+		</div>
+		
+		<div class="clearfix"></div>
+		<hr />
+		
+		<div class="pull-right">
+			<a href="<?php echo $this->baseUrl().'/admin/'.$profile['type'].'/id/'.$profile['id'];?>" class="btn btn-primary" type="button">
+			<?php echo $this->translate('Edit');?>
+			</a>
+		</div>
+	<?php endif;?>
+	
+</div>
+<?php endforeach;?>
+
+<?php echo $this->partial('/partial/pagination.phtml', array('pagination_last_page' => $this->pagination_last_page,'pagination_current_page' => $this->pagination_current_page));?>

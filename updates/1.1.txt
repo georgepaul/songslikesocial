@@ -1,0 +1,7 @@
+files updated  since v1.0:
+
+app/core/controllers/EditprofileController.php
+app/core/languages/en.php
+app/core/languages/it.php
+app/core/languages/sr.php
+version.php

@@ -1,0 +1,51 @@
+<form class="validate-ajax" action="<?php echo $this->escape($this->element->getAction()) ?>" method="<?php echo $this->escape($this->element->getMethod()) ?>" id="<?php echo $this->element->getId(); ?>">
+
+<?php echo $this->element->identifier; ?>
+<?php echo $this->element->csrf; ?>
+
+<div style="display:none">
+<?php echo $this->element->id;?>
+</div>
+
+<?php
+$system_elements = array(
+	'identifier',
+	'formsubmit',
+	'is_hidden',
+	'csrf',
+);
+?>
+
+<?php foreach($this->element as $element):?>
+<?php if (in_array($element->getId(), $system_elements) || strstr($element->getId(), 'notification_email') !== false) continue;?>
+<div class="form-group <?php echo $element->getId();?>">
+<label for="<?php echo $element->getId();?>"><?php echo $element->getLabel(); ?></label>
+<div class="<?php echo ($element->helper == 'formDate' ? 'dateinput' : '')?>"><?php echo $element->render(); ?></div>
+</div>
+<?php endforeach;?>
+
+<hr/>
+
+<?php foreach($this->element as $element):?>
+<?php if (strstr($element->getName(), 'notification_email') === false) continue;?>
+<div class="checkbox <?php echo $element->getId();?>">
+<label for="<?php echo $element->getId();?>"><?php echo $element->render();?> <?php echo $element->getLabel(); ?></label>
+</div>
+<?php endforeach;?>
+
+
+<hr/>
+
+<div class="checkbox <?php echo $this->element->is_hidden->getId();?>">
+<label for="<?php echo $this->element->is_hidden->getId();?>"><?php echo $this->element->is_hidden;?> <?php echo $this->element->is_hidden->getLabel(); ?></label>
+
+</div>
+
+
+<hr/>
+
+<div class="pull-right">
+<span><?php echo $this->element->formsubmit; ?></span>
+</div>
+
+</form>

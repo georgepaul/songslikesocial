@@ -1,0 +1,45 @@
+<?php echo $this->partial('/partial/images_submenu.phtml', array(
+		'profile_data' => $this->profile_data,
+		'total_images' => $this->total_images,
+		'total_albums' => $this->total_albums,
+		'action' => 'list_albums',
+		'active_item' => 'albums',
+		'active_item_id' => (isset($this->active_item_id) ? $this->active_item_id : 0)
+		));?>
+
+<?php if (isset($this->albums) && ! empty($this->albums)):?>
+<div class="no-margin">
+<?php foreach ($this->albums as $album):?>
+<div class="well">
+	<div class="media-body">
+
+		<strong>
+		<a
+			href="<?php echo $this->baseUrl().'/profiles/images/name/'.$this->profile_data->name.'/album/'.$album['id'];?>"
+			class="pull-left"><?php echo $album['name'];?>
+		</a>
+		</strong>
+		&nbsp;
+		<span class="title-count"><?php echo $album['image_count'];?></span>
+
+		
+		<?php if ($this->HasIdentity() && $album['user_id'] == $this->GetCurrentUserId()):?>
+		<hr />
+		
+		<div class="pull-right">
+			<a class="btn btn-warning delete-album-btn" type="button" data-album-id="<?php echo $album['id']?>">
+			<?php echo $this->translate('Delete');?>
+			</a>
+			<a href="<?php echo $this->baseUrl().'/profiles/editalbum/id/'.$album['id'];?>" class="btn btn-primary" type="button">
+			<?php echo $this->translate('Edit');?>
+			</a>
+		</div>
+		<?php endif;?>
+	
+	</div>
+</div>
+<?php endforeach;?>
+</div>
+<?php endif;?>
+
+<?php echo $this->partial('/partial/pagination.phtml', array('pagination_last_page' => $this->pagination_last_page,'pagination_current_page' => $this->pagination_current_page));?>

@@ -1,0 +1,160 @@
+<?php if (isset($this->posts_data) && !empty($this->posts_data)) foreach($this->posts_data as $post):?>
+
+<div class="media well single-post" id="post-<?php echo isset($post['copycat']['post_id']) ? $post['copycat']['post_id'] : $post['post_id'];?>">
+
+	<div class="avatar large pull-left">
+		<?php if ($this->profile_type === 'page' || $post['post_wall_profile_type'] === 'page'):?>
+		<a href="<?php echo $this->baseUrl()?>/<?php echo $post['post_wall_name'];?>">
+			<img src="<?php echo $this->GetStorageUrl('avatar') . $post['post_wall_avatar'];?>">
+		</a>
+		<?php elseif ($this->profile_type === 'feed' && $post['post_wall_profile_type'] === 'group'):?>
+		<a href="<?php echo $this->baseUrl()?>/<?php echo $post['post_wall_name'];?>">
+			<img src="<?php echo $this->GetStorageUrl('avatar') . $post['post_wall_avatar'];?>">
+		</a>
+		<?php else:?>
+		<a href="<?php echo $this->baseUrl()?>/<?php echo $post['user_name'];?>">
+			<img src="<?php echo $this->GetStorageUrl('avatar') . $post['user_avatar'];?>">
+		</a>
+			<?php if (isset($post['author_meta']['badges'])):?>
+			<div class="network-badges vertical">
+				<?php echo $this->partial('/partial/badges.phtml', array('badges' => $post['author_meta']['badges']));?>
+			</div>
+			<?php endif;?>
+		<?php endif;?>
+	</div>
+	
+	<div class="media-body">
+		
+		<h4 class="media-heading pull-left">
+		<?php if ($this->profile_type === 'page' || $post['post_wall_profile_type'] === 'page'):?>
+			<?php echo '<a href="'.$this->baseUrl().'/'.$post['post_wall_name'].'">' . $post['post_wall_screen_name'] .'</a>';?>
+		<?php elseif ($post['post_wall_id'] != $post['author_id'] && ($this->profile_type === 'user' || $this->profile_type === 'feed')):?>
+			<?php echo '<a href="'.$this->baseUrl().'/'.$post['user_name'].'">' . $post['user_screen_name'] .'</a> &raquo; <a href="'.$this->baseUrl().'/'.$post['post_wall_name'].'">'. $post['post_wall_screen_name'].'</a>';?>
+		<?php else:?>
+			<?php echo '<a href="'.$this->baseUrl().'/'.$post['user_name'].'">' . $post['user_screen_name'] .'</a>';?>
+		<?php endif;?>
+		</h4>
+		
+		<div class="time-ago"><span><?php echo $this->GetTimeElapsedString($post['post_created_on']);?></span></div>
+		
+		<?php if ($post['post_wall_profile_type'] === 'user'):?>
+		<div class="post-privacy-info">
+			<?php $post_privacy_all = Zend_Registry::get('post_privacy_all')?>
+			<span><?php echo $this->translate($post_privacy_all[$post['post_privacy']]);?></span>
+		</div>
+		<?php endif;?>
+		
+		<div class="clearfix"></div>
+		
+		<?php Zend_Registry::get('hooks')->trigger('hook_view_post_before_content', $post); ?>
+
+		<div class="media post-content">
+			<p class="content">
+			<?php echo $this->RenderOutput($post['post_content'], 'post');?>
+			</p>
+		
+		<div class="images-box-wrap">
+		<?php echo $this->partial('/partial/post_images.phtml', array(
+				'post_images' => (isset($post['post_images']) ? $post['post_images'] : array())
+				));?>
+		</div>
+		</div>
+		
+		<?php Zend_Registry::get('hooks')->trigger('hook_view_post_after_content', $post); ?>
+		
+		<?php if (isset($post['copycat'])):?>
+		<div class="pull-right">
+			<div class="avatar small pull-left">
+				<a href="<?php echo $this->baseUrl()?>/<?php echo $post['copycat']['user_name'];?>">
+					<img src="<?php echo $this->GetStorageUrl('avatar') . $post['copycat']['user_avatar'];?>">
+				</a>
+			</div>
+			<div class="pull-right">
+				<a href="<?php echo $this->baseUrl()?>/<?php echo $post['copycat']['user_name'];?>">
+					<span><?php echo $post['copycat']['user_screen_name']?></span>
+				</a>
+				<br />
+				<span class="small pull-right"><?php echo $this->translate('Shared').', '.$this->GetTimeElapsedString($post['copycat']['post_created_on']);?></span>
+				<hr />
+			</div>
+		</div>
+		<div class="clearfix"></div>
+		<?php endif;?>
+		
+		<div class="post-buttons-wrap">
+			<?php echo $this->partial('/partial/btn_like.phtml', array(
+					'resource_id' => $post['post_id'], 
+					'resource_type' => 'post',
+					'is_liked' => $post['is_liked'],
+					'likes_count' => $post['likes_count'],
+					'class' => 'btn btn-xs btn-default'));?>
+					
+			<a href="<?php echo $this->baseUrl().'/profiles/showpost/name/'.$post['user_name'].'/post/'.$post['post_id'].'/';?>" data-resource-id="<?php echo $post['post_id'];?>" data-resource-type="post" class="btn share-btn btn-xs btn-default" type="button"><?php echo $this->translate('Share');?></a>
+			
+			<?php if ($this->HasIdentity()):?>
+				<a class="btn btn-xs add-comment-btn btn-default" type="button" data-resource-id="<?php echo $post['post_id'];?>" data-resource-type="post"><?php echo $this->translate('Comment');?></a>
+				
+				<div class="pull-right">
+				<?php echo $this->partial('/partial/btn_report.phtml', array(
+					'is_reported' => false,
+					'resource_owner_name' => $post['user_name'],
+					'resource_id' => $post['post_id'], 
+					'resource_type' => 'post',
+					'btn_title' => $this->translate('Report'),
+					'class' => 'btn btn-xs btn-default',
+					'add_report_form' => $this->add_report_form));?>
+
+				<?php if (!isset($post['copycat']) && ($post['author_id'] == $this->GetCurrentUserId() || $this->HasRole('admin') || $this->HasRole('reviewer'))):?>
+				<a class="btn btn-warning btn-xs modal-editor" type="button" data-link="<?php echo $this->baseUrl();?>/posts/edit/post/<?php echo $post['post_id'];?>"><?php echo $this->translate('Edit');?></a>
+				<?php endif;?>
+				
+				<?php if ($post['author_id'] == $this->GetCurrentUserId() || $this->GetCurrentUserId() === $post['post_wall_profile_owner'] || (isset($post['copycat']) && $post['copycat']['author_id'] == $this->GetCurrentUserId()) || $post['post_wall_id'] == $this->GetCurrentUserId() || $this->HasRole('admin') || $this->HasRole('reviewer')):?>
+				<a class="btn btn-warning btn-xs delete-post-btn" type="button" data-post-id="<?php echo isset($post['copycat']) ? $post['copycat']['post_id'] : $post['post_id'];?>"><?php echo $this->translate('Delete');?></a>
+				<?php endif;?>
+				</div>
+				
+			<?php endif;?>
+		</div>
+		
+		<div class="clearfix"></div>
+		
+		<div class="comments-box-wrap">
+		<?php echo $this->partial('/partial/comments.phtml', array(
+				'comments' => (isset($post['comments']) ? $post['comments'] : array()), 
+				'resource_id' => $post['post_id'], 
+				'resource_type' => 'post',
+				'direct_url' => $this->baseUrl().'/profiles/showpost/name/'.$post['user_name'].'/post/'.$post['post_id'].'/',
+				'add_comment_form' => $this->add_comment_form,
+				'add_report_form' => $this->add_report_form));?>
+		</div>
+		
+	</div>
+	
+</div>
+
+<?php endforeach;?>
+
+<?php if (isset($this->posts_data) && !empty($this->posts_data) && count($this->posts_data) >= Zend_Registry::get('config')->get('limit_posts')):?>
+
+<?php
+// get uri for scroll offset link
+$controller = Zend_Controller_Front::getInstance()->getRequest()->getControllerName();
+$action = Zend_Controller_Front::getInstance()->getRequest()->getActionName();
+$uri = $this->baseUrl().'/';
+switch ($controller .'/'. $action) {
+	case 'search/posts':
+		// no real search allowed for bots - no term=?
+		$uri .= 'search/posts/';
+	break;
+	case 'search/timeline':
+		// no real search allowed for bots - no term=?
+		$uri .= 'search/timeline/';
+	break;
+	case 'profiles/show':
+		$uri .= $this->profile_data->name .'/';
+	break;
+}
+?>
+
+<a href="<?php echo $uri.'?scroll_offset='.(isset($this->post_page_number) ? $this->post_page_number : 1);?>" class="btn btn-default load-more-btn" type="button"><?php echo $this->translate('Load more...');?></a>
+<?php endif;?>

@@ -1,0 +1,28 @@
+<form class="validate-ajax" action="<?php echo $this->escape($this->element->getAction()) ?>" method="<?php echo $this->escape($this->element->getMethod()) ?>" id="<?php echo $this->element->getId(); ?>">
+
+<?php echo $this->element->identifier; ?>
+<?php echo $this->element->csrf; ?>
+
+<div class="form-group <?php echo $this->element->name->getId();?>">
+<label for="<?php echo $this->element->name->getId();?>"><?php echo $this->element->name->getLabel();?></label>
+<?php echo $this->element->name; ?>
+</div>
+
+<div class="form-group <?php echo $this->element->password->getId();?>">
+<label for="<?php echo $this->element->password->getId();?>"><?php echo $this->element->password->getLabel();?></label>
+<?php echo $this->element->password;?>
+</div>
+
+<div class="form-group <?php echo $this->element->loginbtn->getId();?>">
+<span class="pull-right"><?php echo $this->element->loginbtn; ?></span>
+</div>
+
+<div class="clearfix"></div>
+
+<div class="checkbox <?php echo $this->element->remember_me->getId();?>">
+<?php echo $this->element->remember_me;?> <?php echo $this->element->remember_me->getLabel(); ?>
+<a class="forgot-password"> <?php echo $this->translate('Forgot Password?');?></a>
+</div>
+
+
+</form>

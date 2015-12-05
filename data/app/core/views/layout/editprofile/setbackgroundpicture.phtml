@@ -1,0 +1,10 @@
+
+<div class="well">
+	<?php if ($this->image):?>
+	<div class="expand">
+	 <img class="img-responsive" src="<?php echo $this->image.'?'.rand(1,1000);?>" />
+	</div>
+	<?php endif;?>
+	
+	<?php echo $this->form;?>
+</div>

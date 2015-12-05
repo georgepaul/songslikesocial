@@ -1,0 +1,30 @@
+<?php if (isset($this->participants) && !empty($this->participants)):?>
+<div class="well sidebarbox">
+<ul class="nav nav-pills nav-stacked">
+
+<?php foreach($this->participants as $user):?>
+
+	<li <?php if ($user['name'] == $this->active) echo 'class="active"'?>>
+	
+	<a href="<?php echo $this->baseUrl().'/messages/inbox/user/'.$user['name'];?>" style="overflow: auto">
+	
+		<?php if ($user['is_new']) echo '<strong>'?>
+		<span>
+		<div class="avatar small pull-left">
+			<img src="<?php echo $this->GetStorageUrl('avatar').$user['avatar'];?>">
+		</div>
+
+		<span><?php echo $user['screen_name']?></span>
+		
+		<span class="comment-date pull-right"><small><?php echo $this->GetTimeElapsedString($user['last_msg']);?></small></span>
+		
+		</span>
+		<?php if ($user['is_new']) echo '</strong>'?>
+	</a>
+	
+	</li>
+<?php endforeach;?>
+
+</ul>
+</div>
+<?php endif;?>

@@ -1,0 +1,33 @@
+<?php if (isset($this->sidebar_myprofile) && $this->sidebar_myprofile):?>
+<div class="well sidebarbox">
+
+	<div class="avatar large pull-left">
+		<a href="<?php echo $this->baseUrl()?>/<?php echo $this->GetCurrentUserData('name')?>">
+			<img src="<?php echo $this->GetStorageUrl('avatar') . $this->GetCurrentUserData('avatar')?>">
+		</a>
+	</div>
+	
+	<strong><?php echo $this->GetCurrentUserData('screen_name')?></strong>
+	
+	<?php $current_user_meta = Zend_Registry::get('current_user_meta');?>
+	<?php if (isset($current_user_meta['badges'])):?>
+		<div class="network-badges horizontal">
+			<?php echo $this->partial('/partial/badges.phtml', array('badges' => $current_user_meta['badges']));?>
+		</div>
+		<?php endif;?>
+		
+	<div class="clearfix"></div>
+	
+	<hr />
+	
+	<ul class="nav nav-pills nav-stacked">
+		<li>
+			<a href="<?php echo $this->baseUrl()?>/editprofile/edit"><?php echo $this->translate('Edit Profile');?></a>
+		</li>
+		<li>
+			<a href="<?php echo $this->baseUrl()?>/search/posts"><?php echo $this->translate('All Posts');?></a>
+		</li>		
+	</ul>
+
+</div>
+<?php endif;?>

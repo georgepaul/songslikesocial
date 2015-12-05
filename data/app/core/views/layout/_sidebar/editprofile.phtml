@@ -1,0 +1,42 @@
+<?php if (isset($this->sidebar_editprofile)):?>
+<div class="well sidebarbox">
+
+	<div class="avatar large pull-left">
+		<a href="<?php echo $this->baseUrl()?>/<?php echo $this->sidebar_editprofile->name?>">
+			<img src="<?php echo $this->GetStorageUrl('avatar') . $this->sidebar_editprofile->avatar?>">
+		</a>
+	</div>
+	
+	<strong><?php echo $this->sidebar_editprofile->screen_name?></strong>
+</div>
+
+<div class="well">
+	<ul class="nav nav-pills nav-stacked">
+	<li>
+		<a href="<?php echo $this->baseUrl().'/admin/'.$this->sidebar_editprofile->type.'/id/'.$this->sidebar_editprofile->id;?>">
+		<?php echo $this->translate('Edit Profile');?>
+		</a>
+	</li>	
+	<li>
+		<a href="<?php echo $this->baseUrl().'/images/setprofilepicture/name/'.$this->sidebar_editprofile->name;?>">
+		<?php echo $this->translate('Profile Picture');?>
+		</a>
+	</li>
+	<li>
+		<a href="<?php echo $this->baseUrl().'/images/setcoverpicture/name/'.$this->sidebar_editprofile->name;?>">
+		<?php echo $this->translate('Cover Picture');?>
+		</a>
+	</li>
+	<li>
+		<a href="<?php echo $this->baseUrl().'/admin/usersbackground/id/'.$this->sidebar_editprofile->id;?>">
+		<?php echo $this->translate('Background');?>
+		</a>
+	</li>
+	<li>
+		<a href="<?php echo $this->baseUrl().'/admin/removeprofile/id/'.$this->sidebar_editprofile->id;?>">
+		<?php echo $this->translate('Delete');?>
+		</a>
+	</li>
+	</ul>
+</div>
+<?php endif;?>

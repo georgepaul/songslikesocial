@@ -1,0 +1,28 @@
+
+<div class="well">
+<ul class="nav nav-pills">
+
+	<li <?php if ($this->php_action == 'followers') echo 'class="active"'?>>
+		<a href="<?php echo $this->baseUrl().'/profiles/followers/name/'.$this->profile_data->name?>"><?php echo $this->translate('Followers');?> <span class="title-count"><?php echo $this->sidebar_followers_count;?></span></a>
+	</li>
+	
+	<li <?php if ($this->php_action == 'following') echo 'class="active"'?>>
+		<a href="<?php echo $this->baseUrl().'/profiles/following/name/'.$this->profile_data->name?>"><?php echo $this->translate('Following');?> <span class="title-count"><?php echo $this->sidebar_following_count;?></span></a>
+	</li>
+
+	<li <?php if ($this->php_action == 'friends') echo 'class="active"'?>>
+		<a href="<?php echo $this->baseUrl().'/profiles/friends/name/'.$this->profile_data->name?>"><?php echo $this->translate('Friends');?> <span class="title-count"><?php echo $this->sidebar_friends_count;?></span></a>
+	</li>
+	
+	<li <?php if ($this->php_action == 'groups') echo 'class="active"'?>>
+		<a href="<?php echo $this->baseUrl().'/profiles/groups/name/'.$this->profile_data->name?>"><?php echo $this->translate('Groups');?> <span class="title-count"><?php echo $this->sidebar_groups_count;?></span></a>
+	</li>
+		
+</ul>
+</div>
+
+<?php echo $this->partial('/partial/users_list.phtml', array('users' => $this->users));?>
+
+<?php echo $this->partial('/partial/pagination.phtml', array('pagination_last_page' => $this->pagination_last_page,'pagination_current_page' => $this->pagination_current_page));?>
+
+

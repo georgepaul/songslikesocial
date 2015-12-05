@@ -1,0 +1,18 @@
+<form action="<?php echo $this->escape($this->element->getAction()) ?>" method="<?php echo $this->escape($this->element->getMethod()) ?>" class="add-comment-form">
+
+<?php echo $this->element->identifier; ?>
+<?php echo $this->element->csrf; ?>
+
+<?php echo $this->element->resource_type; ?>
+<?php echo $this->element->resource_id; ?>
+
+<div class="form-group <?php echo $this->element->reason->getId();?>">
+<?php echo $this->element->reason;?>
+</div>
+
+              
+<div class="pull-right">
+<?php echo $this->element->submitreport; ?>
+</div>
+
+</form>

@@ -1,0 +1,17 @@
+
+
+<div class="well">
+	<?php echo $this->settings_form;?>
+</div>
+
+
+<?php if (isset($this->callback_info)):?>
+<div class="well">
+	<div class="pull-right">
+		<a class="submit btn btn-default" name="rotate" id="rotate"
+			href="<?php echo $this->baseUrl()?>/admin/settings/section/info/checkforupdates/1"><?php echo $this->translate('Check for updates')?></a>
+	</div>
+	<div class="clearfix"></div>
+<?php echo $this->callback_info;?>
+</div>
+<?php endif;?>

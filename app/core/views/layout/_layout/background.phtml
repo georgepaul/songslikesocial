@@ -1,0 +1,30 @@
+<style type="text/css">
+	body {
+		background-color: #<?php echo Zend_Registry::get('config')->get('background_color')?>;
+	
+	<?php // users background ?>
+	<?php if ($this->php_controller == 'profiles' && 
+			((Zend_Registry::get('config')->get('user_background') && $this->profile_data->role == 'user')
+				|| (Zend_Registry::get('config')->get('subscriber_background') && $this->profile_data->role == 'subscriber')
+				|| ($this->profile_data->type == 'group')
+				|| ($this->profile_data->type == 'page')
+				|| ($this->profile_data->role == 'reviewer')
+				|| ($this->profile_data->role == 'admin'))
+			&& isset($this->profile_data->meta_values['background_noimage']) && !($this->profile_data->meta_values['background_noimage'])
+			&& isset($this->profile_data->meta_values['background_file']) && $this->profile_data->meta_values['background_file']):?>
+		background-image: url("<?php echo  $this->GetStorageUrl('cover') . $this->profile_data->meta_values['background_file']?>");
+		background-position: center 40px;
+		background-repeat: <?php echo ($this->profile_data->meta_values['background_repeat'] ? 'repeat' : 'no-repeat')?>;
+		background-attachment: <?php echo ($this->profile_data->meta_values['background_scroll'] ? 'scroll' : 'fixed')?>;
+		background-size: <?php echo ($this->profile_data->meta_values['background_stretch'] ? 'cover' : 'auto')?>;
+		
+	<?php // network background ?>
+	<?php elseif (Zend_Registry::get('config')->get('background_noimage') != 1):?>
+		background-image: url("<?php echo $this->baseUrl().'/images/'.Zend_Registry::get('config')->get('background')?>");
+		background-position: center 40px;
+		background-repeat: <?php echo (Zend_Registry::get('config')->get('background_repeat') ? 'repeat' : 'no-repeat')?>;
+		background-attachment: <?php echo (Zend_Registry::get('config')->get('background_scroll') ? 'scroll' : 'fixed')?>;
+		background-size: <?php echo (Zend_Registry::get('config')->get('background_stretch') ? 'cover' : 'auto')?>;
+	<?php endif;?>
+	}
+</style>

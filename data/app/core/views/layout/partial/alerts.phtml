@@ -1,0 +1,13 @@
+<div id="alert-collection">
+<?php
+$flashMessages = $this->GetAlerts();
+if (count($flashMessages)) :
+	foreach ($flashMessages as $message) :
+		$output = "<div style=\"display:none\" class=\"alert alert-".$message['level']." animation-".$message['animation']."\"><button data-dismiss=\"alert\" class=\"close\" type=\"button\">&times;</button>".$message['message']."</div>";
+			if ($output) {
+				echo $output;
+			}
+	endforeach;
+endif;
+?>
+</div>

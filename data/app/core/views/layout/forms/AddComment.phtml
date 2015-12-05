@@ -1,0 +1,20 @@
+<form action="<?php echo $this->escape($this->element->getAction()) ?>" method="<?php echo $this->escape($this->element->getMethod()) ?>" class="add-comment-form">
+
+<?php echo $this->element->identifier; ?>
+<?php echo $this->element->csrf; ?>
+
+<?php echo $this->element->resource_type; ?>
+<?php echo $this->element->resource_id; ?>
+
+<div>
+
+<div class="form-group add-comment-input <?php echo $this->element->comment->getId();?>">
+<div class="input-field"><?php echo $this->element->comment; ?></div>
+</div>
+<div class="add-comment-submit-btn">
+<?php echo $this->element->submitcomment; ?>
+</div>
+
+</div>
+
+</form>

@@ -1,0 +1,15 @@
+<?php 
+
+
+if ($this->badges && $this->badges){
+	
+	$badges_array = explode(",", $this->badges);
+}
+
+if (isset($badges_array) && !empty($badges_array)){
+	foreach ($badges_array as $badge){
+		echo '<span class="network-badge glyphicon glyphicon-'.trim($badge).'" title="'.$this->translate(trim($badge)).'"></span>';
+	}
+}
+
+

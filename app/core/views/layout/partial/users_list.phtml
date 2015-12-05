@@ -1,0 +1,28 @@
+<?php if (isset($this->users) && !empty($this->users)) foreach($this->users as $user):?>
+<div class="well">
+
+	<div class="avatar small pull-left">
+		<a href="<?php echo $this->baseUrl().'/'.$user['name'];?>">
+			<img src="<?php echo $this->GetStorageUrl('avatar').$user['avatar'];?>">
+		</a>
+	</div>
+
+
+	<div class="media-body">
+		<h5 class="media-heading">
+		
+		<a
+			href="<?php echo $this->baseUrl().'/'.$user['name'];?>"
+			class="pull-left"><?php echo $user['screen_name'];?>
+		</a> 
+			
+		</h5>
+
+	</div>
+	
+
+</div>
+<?php endforeach;?>
+
+<?php echo $this->partial('/partial/pagination.phtml', array('pagination_last_page' => $this->pagination_last_page,'pagination_current_page' => $this->pagination_current_page));?>
+

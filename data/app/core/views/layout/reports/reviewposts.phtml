@@ -1,0 +1,67 @@
+
+<?php if (isset($this->resources) && !empty($this->resources)) foreach($this->resources as $post):?>
+
+<div class="well single-report">
+
+	<div class="media-body">
+	
+		<div class="avatar large pull-left">
+			<a href="<?php echo $this->baseUrl()?>/<?php echo $post['user_name'];?>">
+				<img src="<?php echo $this->GetStorageUrl('avatar') . $post['user_avatar'];?>">
+			</a>
+		</div>
+		
+		<div class="pull-right">
+		<?php if ($post['post_wall_profile_type'] !== 'group'):?>
+		<span><?php echo $this->translate($post['post_privacy']);?>,&nbsp;</span>
+		<?php endif;?>
+		
+		<span>
+		<?php echo $this->GetTimeElapsedString($post['post_created_on']);?>
+		</span>
+		</div>
+		
+		<h4 class="media-heading">
+		<?php if ($post['post_wall_id'] != $post['author_id']):?>
+			<?php echo '<a href="'.$this->baseUrl().'/'.$post['user_name'].'">' . $post['user_screen_name'] .'</a> &raquo; <a href="'.$this->baseUrl().'/'.$post['post_wall_name'].'">'. $post['post_wall_screen_name'].'</a>';?>
+		<?php else:?>
+			<?php echo '<a href="'.$this->baseUrl().'/'.$post['user_name'].'">' . $post['user_screen_name'] .'</a>';?>
+		<?php endif;?>
+		</h4>
+		
+		<div id="edit-content-post-<?php echo $post['resource_id'];?>">
+		<?php echo $post['post_content'];?>
+		</div>
+	
+	</div>
+	
+	<hr />
+	<div class="pull-left">
+		<p><?php echo $post['reason'];?></p>
+	</div>
+	
+	<div class="pull-right">
+		<div class="avatar small pull-left">
+			<a href="<?php echo $this->baseUrl().'/'.$post['reported_by_name'];?>">
+				<img src="<?php echo $this->GetStorageUrl('avatar') . $post['reported_by_avatar'];?>">
+			</a>
+		</div>
+		<a href="<?php echo $this->baseUrl().'/'.$post['reported_by_name'];?>"><?php echo $post['reported_by_screen_name'];?></a>
+		<span><?php echo $this->GetTimeElapsedString($post['report_date']);?></span> 
+	</div>
+	
+	<div class="clearfix"></div>
+	
+	<div class="pull-right">
+		<a href="<?php echo $this->baseUrl().'/reports/editpost/page/'.$this->pagination_current_page.'/post/'.$post['resource_id'];?>" class="btn btn-default"><?php echo $this->translate('Edit');?></a>
+		<a data-mark-reported="0" data-report-id="<?php echo $post['id'];?>" class="btn btn-default admin-reported-btn"><?php echo $this->translate('Ignore');?></a>
+		<a data-mark-reported="1" data-report-id="<?php echo $post['id'];?>" class="btn btn-warning admin-reported-btn"><?php echo $this->translate('Block');?></a>
+	</div>
+	
+	
+	
+</div>		
+	    
+<?php endforeach;?>
+
+<?php echo $this->partial('/partial/pagination.phtml', array('pagination_last_page' => $this->pagination_last_page,'pagination_current_page' => $this->pagination_current_page));?>

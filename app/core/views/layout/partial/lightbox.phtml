@@ -1,0 +1,100 @@
+<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal">&times;</button>
+			
+			<?php if (isset($this->image['data']['uploaded_by_name']) && $this->image['data']['uploaded_by_name']):?>
+				<div class="avatar small pull-left">
+			  		<a href="<?php echo $this->baseUrl()?>/<?php echo $this->image['data']['uploaded_by_name'];?>">
+						<img src="<?php echo $this->GetStorageUrl('avatar') . $this->image['data']['uploaded_by_avatar'];?>">
+					</a>
+				</div>
+				
+				<a href="<?php echo $this->baseUrl()?>/<?php echo $this->image['data']['uploaded_by_name'];?>"><?php echo $this->image['data']['uploaded_by_screen_name'];?></a>
+	
+				<?php if (isset($this->image['data']['album_id']) && !empty($this->image['data']['album_id'])):?>
+					(<a href="<?php echo $this->baseUrl().'/profiles/images/name/'.$this->image['data']['uploaded_by_name'].'/album/'.$this->image['data']['album_id'];?>"><?php echo $this->image['data']['album_name'];?></a>)
+				<?php endif;?>
+			<?php else:?>
+				<br />
+			<?php endif;?>
+
+		</div>
+		<div class="modal-body">
+			<div class="content-box-wrap">
+				<div class="lightbox-nav">
+					<a class="getimage prev pull-left" <?php if (!$this->image['prev']) echo 'style="display:none"'?> data-context="<?php echo $this->context?>" data-resource-id="<?php echo $this->image['prev']?>"></a>
+					<a class="getimage next pull-right" <?php if (!$this->image['next']) echo 'style="display:none"'?> data-context="<?php echo $this->context?>" data-resource-id="<?php echo $this->image['next']?>"></a>
+				</div>
+			
+				<div class="lightbox-full-image">
+					<img class="img-responsive" src="<?php echo $this->GetStorageUrl('posts').$this->image['data']['file_name']?>">
+				</div>
+			</div>
+			<br />
+			
+			<span class="likes-wrap">
+			<?php echo $this->partial('/partial/btn_like.phtml', array(
+				'resource_id' => $this->resource_id, 
+				'resource_type' => 'image',
+				'is_liked' => $this->is_liked,
+				'likes_count' => $this->likes_count,
+				'class' => 'btn btn-xs btn-default'));?>
+			</span>
+			
+			<?php if ($this->HasIdentity()):?>
+				<a class="btn btn-xs add-comment-btn btn-default" type="button" data-resource-id="<?php echo $this->resource_id?>" data-resource-type="image"><?php echo $this->translate('Comment');?></a>
+				
+				<span class="reports-wrap">
+					<?php echo $this->partial('/partial/btn_report.phtml', array(
+					'is_reported' => $this->is_reported,
+					'resource_owner_name' => $this->resource_owner_name,
+					'resource_id' => $this->resource_id, 
+					'resource_type' => 'image',
+					'btn_title' => $this->translate('Report'),
+					'class' => 'btn btn-xs btn-default',
+					'add_report_form' => $this->add_report_form));?>
+				</span>
+			
+				<span class="pull-right">
+				
+				<span><a href="<?php echo $this->baseUrl()?>/posts/downloadimage/resource_id/<?php echo $this->resource_id?>" class="btn btn-primary btn-xs download-btn" type="button" data-resource-id="<?php echo $this->resource_id?>"><?php echo $this->translate('Download');?></a></span>
+				
+				<?php if ($this->can_rotate):?>
+					<span><a class="btn btn-primary btn-xs rotate-btn" type="button" data-resource-id="<?php echo $this->resource_id?>"><?php echo $this->translate('Rotate');?></a></span>
+				<?php endif;?>
+			
+				<?php if (!empty($this->dropdown_options)):?>
+					<span class="dropdown image-options">
+					  <a data-toggle="dropdown" href="#" class="btn btn-success btn-xs"><?php echo $this->translate('Options');?> <span class="caret"></span></a>
+					  <ul class="dropdown-menu image-options-list">
+					  <?php foreach ($this->dropdown_options as $option):?>
+						  <?php if ($option['id'] == 'divider'):?>
+						  	<li class="divider"></li>
+						  <?php else:?>
+						  	<li><a class="image-move" data-image-id="<?php echo $this->resource_id?>" data-album-id="<?php echo $option['id']?>"><?php echo $option['name']?></a></li>
+						  <?php endif;?>
+					  <?php endforeach;?>
+					  </ul>
+					</span>
+				<?php endif;?>
+				
+				</span>
+			<?php endif;?>
+			
+			<div class="clearfix"></div>
+			
+			<div class="comments-box-wrap">
+			<?php echo $this->partial('/partial/comments.phtml', array(
+					'comments' => (isset($this->comments) ?$this->comments : array()), 
+					'resource_id' => $this->resource_id, 
+					'resource_type' => 'image',
+					'add_comment_form' => $this->add_comment_form,
+					'add_report_form' => $this->add_report_form));?>
+			</div>
+			
+		</div>
+		<div class="modal-footer">
+		</div>
+	</div>
+</div>

@@ -1,0 +1,15 @@
+<?php if (!empty($this->sidebar_images)):?>
+<div class="well sidebarbox">
+	<div class="sb-title">
+		<a href="<?php echo $this->baseUrl()?>/profiles/images/name/<?php echo $this->profile_data->name;?>"><?php echo $this->translate('Images');?></a>
+	</div>
+	
+	<?php foreach ($this->sidebar_images as $image):?>
+	<div class="avatar large pull-left">
+		<a href="<?php echo $this->baseUrl()?>/profiles/images/name/<?php echo $this->profile_data->name;?>">
+			<img src="<?php echo $this->GetStorageUrl('posts') . $image['file_name']?>">
+		</a>
+	</div>
+	<?php endforeach;?>
+</div>
+<?php endif;?>

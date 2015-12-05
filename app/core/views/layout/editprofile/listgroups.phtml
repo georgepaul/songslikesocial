@@ -1,0 +1,59 @@
+<div class="well">
+<div class="pull-right">
+	<a href="<?php echo $this->baseUrl().'/editprofile/creategroup/groupaction/1'?>" class="btn btn-primary" type="button">
+	<?php echo $this->translate('Create a group');?>
+	</a>
+</div>
+</div>
+
+<?php if (isset($this->groups) && !empty($this->groups)) foreach($this->groups as $group):?>
+<div class="well">
+
+	<div class="media-body">
+		<div class="avatar large pull-left">
+			<a href="<?php echo $this->baseUrl().'/'.$group['name'];?>">
+				<img src="<?php echo $this->GetStorageUrl('avatar').$group['avatar'];?>">
+			</a>
+		</div>
+
+		<h4 class="media-heading">
+		<a
+			href="<?php echo $this->baseUrl().'/'.$group['name'];?>"
+			class="pull-left"><?php echo $group['screen_name'];?>
+		</a>
+		
+		</h4>
+	
+	</div>
+	
+	<hr />
+		
+	<div class="pull-right">
+		<a href="<?php echo $this->baseUrl().'/editprofile/setprofilepicture/groupaction/1/name/'.$group['name'];?>" class="btn btn-default" type="button">
+		<?php echo $this->translate('Profile Picture');?>
+		</a>
+		<a href="<?php echo $this->baseUrl().'/editprofile/setcoverpicture/groupaction/1/name/'.$group['name'];?>" class="btn btn-default" type="button">
+		<?php echo $this->translate('Cover Picture');?>
+		</a>
+		
+		<?php if ((Zend_Registry::get('config')->get('user_background') && $this->hasRole('user'))
+					|| (Zend_Registry::get('config')->get('subscriber_background') && $this->hasRole('subscriber'))
+					|| $this->hasRole('reviewer') 
+					|| $this->hasRole('admin')):?>
+		<a href="<?php echo $this->baseUrl().'/editprofile/setbackgroundpicture/groupaction/1/id/'.$group['id'];?>" class="btn btn-default" type="button">
+		<?php echo $this->translate('Background');?>
+		</a>
+		<?php endif;?>
+		
+		<a href="<?php echo $this->baseUrl().'/editprofile/editgroup/groupaction/1/name/'.$group['name'];?>" class="btn btn-primary" type="button">
+		<?php echo $this->translate('Edit');?>
+		</a>
+		
+
+	</div>
+
+
+</div>
+<?php endforeach;?>
+
+<?php echo $this->partial('/partial/pagination.phtml', array('pagination_last_page' => $this->pagination_last_page,'pagination_current_page' => $this->pagination_current_page));?>

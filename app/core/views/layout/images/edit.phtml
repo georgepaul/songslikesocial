@@ -1,0 +1,46 @@
+<div class="edit-picture-box">
+
+	<div class="row">
+		<div class="col-md-<?php echo $this->preview_span;?>">
+
+			<div id="preview-pane" class="<?php echo $this->preview_class;?>">
+				<span class="preview">preview:</span>
+				<div class="preview-container">
+					<img
+						src="<?php echo $this->baseUrl(). TMP_PUBLIC_NAME .'/'. $this->image;?>?<?php echo rand(1,1000)?>"
+						class="jcrop-preview" alt="Preview" />
+				</div>
+			</div>
+
+			<!-- This is the image we're attaching Jcrop to -->
+			<img class="img-responsive"
+				src="<?php echo $this->baseUrl(). TMP_PUBLIC_NAME .'/'. $this->image;?>?<?php echo rand(1,1000)?>"
+				id="target" /> <br />
+
+		</div>
+	</div>
+
+	<form id="cropform" action="" method="post">
+		<input type="hidden" id="x" name="x" /> <input type="hidden" id="y"
+			name="y" /> <input type="hidden" id="w" name="w" /> <input
+			type="hidden" id="h" name="h" />
+
+		<hr />
+
+		<div class="pull-right">
+			<input type="submit"
+				value="<?php echo $this->translate('Save');?>" id="submit"
+				name="submit" class="submit btn btn-default" /> 
+			
+			<a href="<?php echo $this->baseUrl().'/images/edit/skip/1'?>"
+				id="rotate" name="rotate" class="submit btn btn-default"><?php echo $this->translate('Skip this');?>
+			</a>
+			
+			<a href="<?php echo $this->baseUrl().'/images/edit/rotate/1'?>"
+				id="rotate" name="rotate" class="submit btn btn-default"><?php echo $this->translate('Rotate image');?>
+			</a>
+		</div>
+
+	</form>
+
+</div>

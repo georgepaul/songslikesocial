@@ -1,0 +1,17 @@
+<form enctype="multipart/form-data" action="<?php echo $this->escape($this->element->getAction()) ?>" method="<?php echo $this->escape($this->element->getMethod()) ?>" id="<?php echo $this->element->getId(); ?>">
+
+<?php echo $this->element->identifier; ?>
+<?php echo $this->element->csrf; ?>
+
+<div class="form-group pull-right <?php echo $this->element->coverfile->getId();?>">
+<span class="btn btn-default btn-file">
+<span><?php echo $this->element->coverfile->getLabel();?></span>
+<?php echo $this->element->coverfile->render(); ?>
+</span>
+</div>
+
+<div class="hidden">
+<span><?php echo $this->element->formsubmit; ?></span>
+</div>
+
+</form>

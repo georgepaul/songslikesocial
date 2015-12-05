@@ -1,0 +1,103 @@
+<div>
+	<img class="img-responsive cover-img" src="<?php echo $this->GetStorageUrl('cover') . $this->profile_data->cover?>">
+</div>
+
+<div class="well">
+
+	<div>
+	<?php if ($this->profile_data->type === 'group'):?>
+	 <?php $group_privacy_all= Zend_Registry::get('group_privacy_all');?>
+	 <?php echo $group_privacy_all[$this->profile_data->profile_privacy];?>
+	 <hr />
+	<?php endif;?>
+	</div>
+
+	<div class="pull-left">
+	
+		<div class="avatar large pull-left">
+			<a href="<?php echo $this->baseUrl()?>/<?php echo $this->profile_data->name?>">
+				<img src="<?php echo $this->GetStorageUrl('avatar') . $this->profile_data->avatar?>">
+			</a>
+		</div>
+		
+		<strong><?php echo $this->profile_data->screen_name?></strong>
+		
+		<?php if (isset($this->profile_data->meta_values['badges'])):?>
+		<div class="network-badges horizontal">
+			<?php echo $this->partial('/partial/badges.phtml', array('badges' => $this->profile_data->meta_values['badges']));?>
+		</div>
+		<?php endif;?>
+		
+		<?php if ($this->profile_data->is_hidden):?>
+		<strong class="warning">(<?php echo $this->translate('Hidden')?>)</strong>
+		<?php endif;?>
+		
+	</div>
+
+	<div class="pull-right">
+	<a type="button" class="btn share-btn btn-default" data-resource-type="profile" data-resource-id="<?php echo $this->profile_data->name;?>"><?php echo $this->translate('Share')?></a>
+	
+	<?php if ($this->profile_data->type === 'page'):?>
+		<?php echo $this->partial('/partial/btn_like.phtml', array(
+			'resource_id' => $this->profile_data->id, 
+			'resource_type' => 'page',
+			'is_liked' => $this->profile_data->is_liked,
+			'likes_count' => $this->profile_data->likes_count,
+			'class' => 'btn btn-default'));?>
+	<?php endif;?>
+	
+	<?php if ($this->HasIdentity()):?>
+		<?php if ($this->profile_data->type === 'group'):?>
+		
+			<?php if (!$this->is_following):?>
+			<a href="<?php echo $this->baseUrl()?>/connections/togglefollow/name/<?php echo $this->profile_data->name?>" type="button" class="btn btn-primary"><?php echo $this->translate('Join Group');?></a>
+			
+			<?php elseif ($this->is_following && $this->is_friend):?>
+			<a href="<?php echo $this->baseUrl()?>/connections/togglefollow/name/<?php echo $this->profile_data->name?>" type="button" class="btn btn-success"><?php echo $this->translate('Leave Group');?></a>
+			
+			<?php elseif ($this->is_following && !$this->is_friend):?>
+			<a href="<?php echo $this->baseUrl()?>/connections/togglefollow/name/<?php echo $this->profile_data->name?>" type="button" class="btn btn-success"><?php echo $this->translate('Cancel Request');?></a>
+			
+			<?php endif;?>
+			
+		<?php elseif ($this->profile_data->type === 'user' && $this->GetCurrentUserId() != $this->profile_data->id):?>
+		
+			<?php if ($this->is_following):?>
+			<a href="<?php echo $this->baseUrl()?>/connections/togglefollow/name/<?php echo $this->profile_data->name?>" type="button" class="btn btn-success"><?php echo $this->translate('Unfollow');?></a>
+			<?php else:?>
+			<a href="<?php echo $this->baseUrl()?>/connections/togglefollow/name/<?php echo $this->profile_data->name?>" type="button" class="btn btn-primary"><?php echo $this->translate('Follow');?></a>
+			<?php endif;?>
+			
+			<?php if ($this->HasRole('admin') || $this->HasRole('reviewer') || !isset($this->profile_data->meta_values['contact_privacy']) || $this->profile_data->meta_values['contact_privacy'] == 'e' || ($this->profile_data->meta_values['contact_privacy'] == 'f' && $this->is_friend)):?>
+			<a href="<?php echo $this->baseUrl()?>/messages/inbox/user/<?php echo $this->profile_data->name?>" type="button" class="btn btn-info"><?php echo $this->translate('Message');?></a>
+			<?php endif;?>
+				
+		<?php elseif ($this->profile_data->type === 'user' && $this->GetCurrentUserId() == $this->profile_data->id):?>
+		<a href="<?php echo $this->baseUrl()?>/editprofile/edit" type="button" class="btn btn-success"><?php echo $this->translate('Edit Profile');?></a>
+		<?php endif;?>
+		
+		<?php if ($this->HasRole('admin') && $this->profile_data->id != $this->GetCurrentUserId()):?>
+		<a href="<?php echo $this->baseUrl().'/admin/'.$this->profile_data->type.'/id/'.$this->profile_data->id?>" type="button" class="btn btn-success"><?php echo $this->translate('Edit Profile');?></a>
+		<?php endif;?>
+		
+	<?php endif;?>
+
+	<?php if ($this->profile_data->type === 'user'):?>
+		<a href="<?php echo $this->baseUrl()?>/profiles/images/name/<?php echo $this->profile_data->name?>" type="button" class="btn btn-primary"><?php echo $this->translate('Images');?></a>
+	<?php endif;?>	
+	
+	<?php if ($this->GetCurrentUserId() != $this->profile_data->id && $this->GetCurrentUserId() != $this->profile_data->owner):?>
+	<?php echo $this->partial('/partial/btn_report.phtml', array(
+		'is_reported' => $this->is_reported,
+		'resource_id' => $this->profile_data->id, 
+		'resource_type' => $this->profile_data->type,
+		'btn_title' => $this->translate('Report'),
+		'class' => 'btn btn-default',
+		'add_report_form' => $this->add_report_form));?>			
+	
+	<?php endif;?>
+	
+	</div>
+</div>
+
+

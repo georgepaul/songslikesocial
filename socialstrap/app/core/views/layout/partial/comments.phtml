@@ -1,0 +1,100 @@
+<?php 
+/*
+ * uses: comments array(), resource_type, resource_id, add_comment_form Zend_Form, add_report_form Zend_Form
+ */
+?>
+
+<div class="comments" data-resource-type="<?php echo $this->resource_type;?>" data-resource-id="<?php echo $this->resource_id;?>">
+<div class="media"></div>
+<?php $count = 0;  $short_count = (int)Zend_Registry::get('config')->get('limit_comments');?>
+
+<?php if (isset($this->comments) && !empty($this->comments)):?>
+<?php $total_count = count($this->comments);?>
+
+<?php if ($total_count == 10 && isset($this->direct_url)):?>
+<div class="media comments" style="display:none">
+	<a href="<?php echo $this->direct_url?>?expand_comments"><?php echo $this->translate('Load more...');?></a>
+</div>
+<?php endif;?>
+
+<?php foreach ($this->comments as $comment):?>
+
+<div class="media comments" <?php ++$count; if ($total_count > $short_count && $count <= $total_count - $short_count && !isset($_GET['expand_comments'])) echo 'style="display:none"';?>>
+	<div class="avatar small pull-left">
+		<a href="<?php echo $this->baseUrl()?>/<?php echo $comment['comment_name'];?>">
+			<img src="<?php echo $this->GetStorageUrl('avatar') . $comment['comment_avatar'];?>">
+		</a>
+	</div>
+
+	<div class="media-body">
+
+	<a href="<?php echo $this->baseUrl()?>/<?php echo $comment['comment_name'];?>"><?php echo $comment['comment_screen_name'];?></a>
+	
+	<?php Zend_Registry::get('hooks')->trigger('hook_view_comment_before_content', $comment); ?>
+	<span class="comment-content content"><?php echo $this->RenderOutput($comment['comment_content'], 'comment');?></span>
+	<?php Zend_Registry::get('hooks')->trigger('hook_view_comment_after_content', $comment); ?>
+	
+	<div class="clearfix"></div>
+		<div>
+			<span class="comment-date"><small><?php echo $comment['comment_created_on'];?></small></span>
+
+			<?php echo $this->partial('/partial/btn_like.phtml', array(
+							'resource_id' => $comment['comment_id'], 
+							'resource_type' => 'comment',
+							'is_liked' => $comment['is_liked'],
+							'likes_count' => $comment['likes_count'],
+							'class' => 'btn btn-xs btn-link'));?>
+	
+			<?php echo $this->partial('/partial/btn_report.phtml', array(
+				'is_reported' => $comment['is_reported'],
+				'resource_owner_name' => $comment['comment_name'],
+				'resource_id' => $comment['comment_id'], 
+				'resource_type' => 'comment',
+				'btn_title' => $this->translate('Report'),
+				'class' => 'btn btn-xs btn-link',
+				'add_report_form' => $this->add_report_form));?>
+			
+			<?php if ($this->HasRole('admin') || $this->HasRole('reviewer') || $comment['comment_author_id'] === $this->GetCurrentUserId()):?>
+				<a class="btn btn-xs btn-link modal-editor" data-link="<?php echo $this->baseUrl();?>/comments/edit/id/<?php echo $comment['comment_id'];?>"><?php echo $this->translate('Edit');?></a>
+			<?php endif;?>
+			<?php if ($this->HasRole('admin') || $this->HasRole('reviewer') || $comment['comment_author_id'] === $this->GetCurrentUserId() || $comment['post_wall_id'] === $this->GetCurrentUserId() || $comment['post_wall_owner'] === $this->GetCurrentUserId()):?>
+				<a class="btn btn-xs btn-link delete-comment-btn " data-comment-id="<?php echo $comment['comment_id'];?>"><?php echo $this->translate('Delete');?></a>
+			<?php endif;?>
+		</div>
+ 			
+ 	</div>
+
+	
+</div>
+<?php if ($total_count > $short_count && $count == 1 && !isset($_GET['expand_comments'])):?>
+<a class="show-hidden-comments"><?php echo $this->translate('View all comments');?></a>
+<?php endif;?>
+
+<?php endforeach;?>
+<?php endif;?>
+
+<?php if ($this->HasIdentity() && $this->add_comment_form):?>
+<div class="media add-comment" <?php if (!$count) echo 'style="display:none"';?>>
+	
+	<div class="avatar small pull-left">
+		<?php if (isset($comment) && $comment['post_wall_type'] == 'page' && ($comment['post_wall_id'] === $this->GetCurrentUserId() || $comment['post_wall_owner'] === $this->GetCurrentUserId())):?>
+		<a href="<?php echo $this->baseUrl()?>/<?php echo $comment['post_wall_name']?>">
+			<img src="<?php echo $this->GetStorageUrl('avatar') .$comment['post_wall_avatar']?>">
+		</a>
+		<?php else:?>
+		<a href="<?php echo $this->baseUrl()?>/<?php echo $this->GetCurrentUserData('name')?>">
+			<img src="<?php echo $this->GetStorageUrl('avatar') . $this->GetCurrentUserData('avatar')?>">
+		</a>
+		<?php endif;?>
+	</div>
+	
+	<div>
+		<?php  $form = $this->add_comment_form;?>
+		<?php  $form->getElement('resource_type')->setValue($this->resource_type);?>
+		<?php  $form->getElement('resource_id')->setValue($this->resource_id);?>
+		<?php  echo $this->add_comment_form;?>
+	</div>
+</div>
+<?php endif;?>
+
+</div>

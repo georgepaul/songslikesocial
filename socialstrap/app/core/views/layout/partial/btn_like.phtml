@@ -1,0 +1,12 @@
+<?php 
+/*
+ * uses: resource_type, resource_id, is_liked, likes_count
+ */
+?>
+
+<a
+	class="<?php if ($this->HasIdentity()) echo 'toggle-like-btn'; else echo 'login-requiered';?> show-likes-btn <?php echo $this->class;?>"
+	data-resource-id="<?php echo $this->resource_id;?>"
+	data-resource-type="<?php echo $this->resource_type;?>"><span class="likes-text"><?php echo ($this->is_liked == 0 ? $this->translate('Like') : $this->translate('Unlike'));?>
+</span> <span class="likes-count"><?php echo $this->likes_count?></span>
+</a>

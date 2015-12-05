@@ -1,0 +1,16 @@
+files updated since v1.1:
+
+app/core/languages/en.php
+app/core/plugins/AccessCheck.php
+app/core/views/layout/layout_login.phtml
+app/core/views/layout/partial/badges.phtml
+version.php
+
+files removed since v1.1:
+
+app/core/languages/it.php
+app/core/languages/sr.php
+
+
+NOTES:
+You can find fresh set of language files here: http://www.socialstrap.net/languages/all.zip

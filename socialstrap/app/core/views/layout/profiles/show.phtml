@@ -1,0 +1,16 @@
+
+<?php if ($this->HasIdentity() && isset($this->add_post_form)):?>
+<div class="user-post-area clearfix well">
+		  <div class="media-body">
+		  
+		  	<div>
+		  	 <?php echo $this->add_post_form;?>
+			</div>
+			
+		  </div>
+</div>
+<?php endif;?>
+
+<div id="posts-wrapper">
+<?php echo $this->render('/partial/posts.phtml');?>
+</div>

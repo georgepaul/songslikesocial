@@ -1,0 +1,54 @@
+<?php $is_owner = ($this->HasIdentity() && $this->profile_data->id == $this->GetCurrentUserId() ? true : false); ?>
+
+<div class="well">
+
+<ul class="nav nav-pills">
+
+	<li class="<?php echo ($this->action == 'list_images' && !$this->active_item_id ? 'active' : '')?>">
+		<a href="<?php echo $this->baseUrl().'/profiles/images/name/'.$this->profile_data->name;?>"><?php echo $this->translate('All Images').' <span class="title-count">'.$this->total_images.'</span>';?></a>
+	</li>
+  
+	<?php if ($this->profile_data->type == 'user'):?>
+  
+		<li class="<?php echo ($this->action == 'list_albums' ? 'active' : '')?>">
+			<a href="<?php echo $this->baseUrl().'/profiles/albums/name/'.$this->profile_data->name;?>"><?php echo $this->translate('Albums').' <span class="title-count">'.$this->total_albums.'</span>';?></a>
+		</li>
+	
+		<?php if ($this->action == 'edit_album' || ($this->action == 'list_images' && $this->active_item_id)):?>
+		<li class="active">
+			<a href=""><?php echo $this->active_item;?></a>
+		</li>
+		<?php endif;?>
+	  
+			<?php if ($is_owner && $this->action == 'list_images'):?>
+		<li class="pull-right">
+	  	<form id="upload-files" method="post" action="">
+			<span class="btn btn-success btn-file">
+			<span><?php echo $this->translate('Add images...');?></span>
+			<input type="file" name="files[]" multiple>
+			</span>
+		</form>
+		</li>
+		<?php endif;?>
+	  
+		<?php if ($is_owner && ($this->action == 'list_albums' || $this->action == 'create_album')):?>
+		<li class="pull-right <?php if ($this->active_item == 'new') echo 'active';?>">
+			<a href="<?php echo $this->baseUrl().'/profiles/createalbum';?>" class="btn btn-default"><?php echo $this->translate('Create album');?></a>
+		</li>
+		<?php endif;?>
+	  
+	  
+	  
+		<?php if ($is_owner):?>
+		<?php echo $this->partial('/partial/file_upload.phtml', array(
+			'target_element' => '#upload-files',
+			'url' => $this->baseUrl().'/fileupload/receivefile/to/'.$this->active_item_id.'/',
+			'random_string' => ''
+			));?>
+		<?php endif;?>
+		
+	<?php endif;?>
+
+</ul>
+
+</div>

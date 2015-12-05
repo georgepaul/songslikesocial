@@ -1,0 +1,35 @@
+<?php if ($this->user):?>
+
+<div class="well message-box">
+
+<div class="message-head clearfix">
+	<div class="pull-right">
+		<a data-user="<?php echo $this->user->name?>" class="btn btn-warning delete-message-btn btn-xs" type="button"><?php echo $this->translate('Delete All')?></a>
+	</div>
+</div>
+
+<hr>
+
+<div class="message-box-inner">
+<?php if (!empty($this->messages)) foreach($this->messages as $message):?>
+<?php echo $this->partial('/partial/message.phtml', array('message' => $message));?>
+<?php endforeach;?>
+</div>
+
+<div class="media message-post">
+	
+	<div class="avatar small pull-left">
+		<a href="<?php echo $this->baseUrl().'/'.$this->GetCurrentUserData('name');?>">
+			<img src="<?php echo $this->GetStorageUrl('avatar').$this->GetCurrentUserData('avatar');?>">
+		</a>
+	</div>
+	
+	<div class="message-submit" data-user="<?php echo $this->user->name?>" data-offset="<?php echo $this->offset?>">
+		<?php echo $this->message_form;?>
+	</div>
+</div>
+
+
+</div>
+
+<?php endif;?>

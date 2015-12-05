@@ -1,0 +1,16 @@
+Options -Multiviews
+
+RewriteEngine On
+
+# Try uncommenting following line on error 500, if you're using sub-folder replace / with /mysubfoldername
+#RewriteBase /
+
+# uncomment if you want to push traffic to www
+RewriteCond %{HTTP_HOST} !^www\.
+RewriteRule ^(.*)$ http://www.%{HTTP_HOST}/$1 [R=301,L]
+
+# Zend Rewrite rules
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l
+RewriteRule ^.*$ - [NC,L]
+RewriteRule ^.*$ index.php [NC,L]

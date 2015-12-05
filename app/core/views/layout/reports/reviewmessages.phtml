@@ -1,0 +1,53 @@
+<?php if (isset($this->resources) && !empty($this->resources)) foreach($this->resources as $message):?>
+<div class="well single-report">
+
+	<div class="pull-left">
+	<div class="avatar small pull-left">
+		<a href="<?php echo $this->baseUrl().'/'.$message['from_name'];?>">
+			<img src="<?php echo $this->GetStorageUrl('avatar').$message['from_user_avatar'];?>">
+		</a>
+	</div>
+	<div class="avatar small pull-left">
+		<a href="<?php echo $this->baseUrl().'/'.$message['to_name'];?>">
+			<img src="<?php echo $this->GetStorageUrl('avatar').$message['to_user_avatar'];?>">
+		</a>
+	</div>
+	</div>
+	
+	<div class="media-body">
+		<div class="pull-right"><span><?php echo $this->GetTimeElapsedString($message['message_sent_on']);?></span></div>
+		<h5 class="media-heading"><?php echo $this->translate('From:').' '.$message['from_screen_name'];?><br/><?php echo $this->translate('To:').' '.$message['to_screen_name'];?></h5>
+		<hr />
+		<p>
+		<?php echo $this->RenderOutput($message['message_content'], 'message');?>
+		</p>
+	</div>
+	
+	
+	<hr />
+	
+	<div class="pull-left">
+	<p><?php echo $message['reason'];?></p>
+	</div>
+	
+	<div class="pull-right">
+	<div class="avatar small pull-left">
+		<a href="<?php echo $this->baseUrl().'/'.$message['reported_by_name'];?>">
+			<img src="<?php echo $this->GetStorageUrl('avatar').$message['reported_by_avatar'];?>">
+		</a>
+	</div>
+	<a href="<?php echo $this->baseUrl().'/'.$message['reported_by_name'];?>"><?php echo $message['reported_by_screen_name'];?></a>
+	<?php echo $this->GetTimeElapsedString($message['report_date']);?> 
+	</div>
+	
+	<div class="clearfix"></div>
+	
+	<div class="pull-right">
+	 <a data-mark-reported="0" data-report-id="<?php echo $message['id'];?>" class="btn btn-default admin-reported-btn"><?php echo $this->translate('Ignore');?></a>
+	 <a data-mark-reported="1" data-report-id="<?php echo $message['id'];?>" class="btn btn-warning admin-reported-btn"><?php echo $this->translate('Block');?></a>
+	</div>
+	
+</div>		
+<?php endforeach;?>
+
+<?php echo $this->partial('/partial/pagination.phtml', array('pagination_last_page' => $this->pagination_last_page,'pagination_current_page' => $this->pagination_current_page));?>

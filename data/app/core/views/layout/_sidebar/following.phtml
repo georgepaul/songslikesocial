@@ -1,0 +1,12 @@
+<?php if (isset($this->sidebar_following) && !empty($this->sidebar_following)):?>
+<div class="well sidebarbox">
+	<div class="sb-title">
+		<a href="<?php echo $this->baseUrl()?>/profiles/following/name/<?php echo $this->profile_data->name;?>"><?php echo $this->translate('Following');?></a>
+		<span class="sidebar-count"><?php echo $this->sidebar_following_count;?></span>
+	</div>
+	<?php echo $this->partial('/partial/profiles_sidebar.phtml', array('profiles' => $this->sidebar_following));?>
+</div>
+<?php endif;?>
+
+
+

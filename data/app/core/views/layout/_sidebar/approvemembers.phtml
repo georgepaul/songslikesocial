@@ -1,0 +1,26 @@
+<?php if (isset($this->sidebar_approve_members) && !empty($this->sidebar_approve_members)):?>
+<div class="well sidebarbox">
+	<div class="sb-title">
+		<span><?php echo $this->translate('Pending Approval');?></span>
+		<span class="sidebar-count"><?php echo $this->sidebar_approve_members_count;?></span>
+	</div>
+	
+	<?php foreach ($this->sidebar_approve_members as $user):?>
+	<div>
+		<div class="avatar large pull-left">
+		 <a href="<?php echo $this->baseUrl()?>/<?php echo $user['name']?>">
+		  <img title="<?php echo $user['screen_name']?>" src="<?php echo $this->GetStorageUrl('avatar') . $user['avatar']?>">
+		 </a>
+		</div>
+			
+		<div class="pull-left">
+		 <a href="<?php echo $this->baseUrl()?>/connections/membership/name/<?php echo $user['name']?>/group/<?php echo $this->profile_data->name?>/do/join"><?php echo $this->translate('Approve');?></a>
+		 /
+		 <a href="<?php echo $this->baseUrl()?>/connections/membership/name/<?php echo $user['name']?>/group/<?php echo $this->profile_data->name?>/do/leave"><?php echo $this->translate('Reject');?></a>
+		</div>
+	</div>
+	<div class="clearfix"></div>
+	<?php endforeach;?>
+</div>
+<?php endif;?>
+

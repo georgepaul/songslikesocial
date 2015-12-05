@@ -1,0 +1,43 @@
+<div class="well profileinfo">
+
+	<p><strong>@<?php echo $this->profile_data->name?></strong></p>
+	
+	<?php if (isset($this->profile_data->meta_values['gender']) && $this->profile_data->meta_values['gender']):?>
+		<p>
+		<?php $genders_array = Zend_Registry::get('genders_array');?>
+		<?php echo '<strong>'.$this->translate('Gender').':</strong> '.$genders_array[$this->profile_data->meta_values['gender']]?>
+		</p>
+	<?php endif;?>
+	
+	<?php if (isset($this->profile_data->meta_values['location']) && $this->profile_data->meta_values['location']):?>
+		<p>
+		<?php echo '<strong>'.$this->translate('Location').':</strong> '.$this->RenderOutput($this->profile_data->meta_values['location'], 'sidebar')?>
+		</p>
+	<?php endif;?>
+		
+	<?php if (isset($this->profile_data->meta_values['birthday']) && $this->profile_data->meta_values['birthday']):?>
+		<p>
+		<?php echo '<strong>'.sprintf($this->translate('Age: %u'), $this->GetYearsOld($this->profile_data->meta_values['birthday'])).'</strong>'?>
+		</p>	
+		<p>
+		<?php if (date('d/m', strtotime($this->profile_data->meta_values['birthday'])) == date('d/m')):?>
+		<?php echo '<strong>'.$this->translate('Birthday').':</strong> '.$this->translate('Today')?>
+		<?php else:?>
+		<?php echo '<strong>'.$this->translate('Birthday').':</strong> '.$this->FormatDate($this->profile_data->meta_values['birthday'])?>
+		<?php endif;?>
+		</p>
+	<?php endif;?>
+	
+	<?php if (isset($this->profile_data->meta_values['website']) && $this->profile_data->meta_values['website']):?>
+		<p>
+		<?php echo '<strong>'.$this->translate('Website').':</strong> '.$this->RenderOutput($this->profile_data->meta_values['website'], 'sidebar')?>
+		</p>
+	<?php endif;?>
+	
+	<?php if (isset($this->profile_data->meta_values['description']) && $this->profile_data->meta_values['description']):?>
+		<p>
+		<?php echo $this->RenderOutput($this->profile_data->meta_values['description'], 'sidebar')?>
+		</p>
+	<?php endif;?>
+	
+</div>

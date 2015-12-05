@@ -1,0 +1,106 @@
+<?php 
+
+/*
+ * uses: pagination_last_page, pagination_current_page,
+*/
+
+if (isset($this->pagination_last_page) && $this->pagination_last_page > 1){
+
+	$uri = $this->baseUrl().'/';
+	$params = Zend_Controller_Front::getInstance()->getRequest()->getParams();
+	foreach ($params as $key => $val){
+		if ($key === 'module' || $key === 'page') continue;
+		if ($key === 'controller' || $key === 'action'){
+			$uri .=  $this->escape($val) . '/';
+		}else{
+			$uri .= $this->escape($key) . '/' . $this->escape($val) . '/';
+		}
+	}
+
+	$each_side = 1;
+	$rel = '';
+	$current_page = (int)$this->pagination_current_page;
+	$lastpage = (int)$this->pagination_last_page;
+	$prev = $current_page - 1;
+	$next = $current_page + 1;
+
+	$pagination = '<div class="pull-right"><ul class="pagination">';
+
+	//previous button
+	if ($current_page > 1){
+		$pagination.= '<li><a href="'.$uri.'page/'.$prev.'"><span>&laquo;</span></a></li>';
+	}
+
+
+	//pages
+	if ($lastpage < 5 + ($each_side * 2))	//not enough pages to bother breaking it up
+	{
+		for ($counter = 1; $counter <= $lastpage; $counter++)
+		{
+			if ($counter == $current_page)
+				$pagination.= '<li><span>'.$counter.'</span></li>';
+			else {
+				$pagination.= '<li><a href="'.$uri.'page/'.$counter.'">'.$counter.'</a></li>';
+			}
+		}
+	}
+	elseif($lastpage > 3 + ($each_side * 2))	//enough pages to hide some
+	{
+		//close to beginning; only hide later pages
+		if($current_page < 1 + ($each_side * 2))
+		{
+			for ($counter = 1; $counter < 2 + ($each_side * 2); $counter++)
+			{
+				if ($counter == $current_page)
+					$pagination.= '<li><span>'.$counter.'</span></li>';
+				else {
+					$pagination.= '<li><a href="'.$uri.'page/'.$counter.'">'.$counter.'</a></li>';
+				}
+
+			}
+			$pagination.= '<li class="disabled"><span>...</span></li>';
+			$pagination.= '<li><a href="'.$uri.'page/'.$lastpage.'">'.$lastpage.'</a></li>';
+		}
+		//in middle; hide some front and some back
+		elseif($lastpage - ($each_side * 2) > $current_page && $current_page > ($each_side * 2))
+		{
+			$pagination.= '<li><a href="'.$uri.'page/1"><span>1</span></a></li>';
+			$pagination.= '<li class="disabled"><span>...</span></li>';
+			for ($counter = $current_page - $each_side; $counter <= $current_page + $each_side; $counter++)
+			{
+				if ($counter == $current_page)
+					$pagination.= '<li><span>'.$counter.'</span></li>';
+				else {
+					$pagination.= '<li><a href="'.$uri.'page/'.$counter.'">'.$counter.'</a></li>';
+				}
+					
+			}
+			$pagination.= '<li class="disabled"><span>...</span></li>';
+			$pagination.= '<li><a href="'.$uri.'page/'.$lastpage.'">'.$lastpage.'</a></li>';
+
+		}
+		//close to end; only hide early pages
+		else
+		{
+			$pagination.= '<li><a href="'.$uri.'page/1"><span>1</span></a></li>';
+			$pagination.= '<li class="disabled"><span>...</span></li>';
+			for ($counter = $lastpage - (2 + ($each_side * 2)); $counter <= $lastpage; $counter++)
+			{
+				if ($counter == $current_page)
+					$pagination.= '<li><span>'.$counter.'</span></li>';
+				else {
+					$pagination.= '<li><a href="'.$uri.'page/'.$counter.'">'.$counter.'</a></li>';
+				}
+			}
+		}
+	}
+
+	//next button
+	if ($current_page < $counter - 1)
+		$pagination.= '<li><a href="'.$uri.'page/'.$next.'"><span>&raquo;</span></a></li>';
+
+	$pagination.= "</ul></div>";
+
+	echo $pagination;
+}
+?>

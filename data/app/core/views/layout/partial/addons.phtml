@@ -1,0 +1,12 @@
+<div class="well">
+<h5 class="pull-left"><strong><?php echo $this->title?></strong> | <?php echo $this->version?></h5>
+
+<div class="pull-right">
+<?php if ($this->is_disabled):?>
+<a href="<?php echo $this->baseUrl().'/admin/addons/enable/1/section/'.$this->addon?>" class="btn btn-info"><?php echo $this->translate('Enable')?></a>
+<?php else:?>
+<a href="<?php echo $this->baseUrl().'/admin/addons/disable/1/section/'.$this->addon?>" class="btn btn-warning"><?php echo $this->translate('Disable')?></a>
+<?php endif;?>
+</div>
+
+</div>

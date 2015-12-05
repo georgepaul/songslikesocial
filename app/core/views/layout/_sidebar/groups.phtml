@@ -1,0 +1,10 @@
+<?php if (isset($this->sidebar_groups) && !empty($this->sidebar_groups)):?>
+<div class="well sidebarbox">
+	<div class="sb-title">
+		<a href="<?php echo $this->baseUrl()?>/profiles/groups/name/<?php echo $this->profile_data->name;?>"><?php echo $this->translate('Groups');?></a>
+		<span class="sidebar-count"><?php echo $this->sidebar_groups_count;?></span>
+	</div>
+	
+	<?php echo $this->partial('/partial/profiles_sidebar.phtml', array('profiles' => $this->sidebar_groups));?>
+</div>
+<?php endif;?>

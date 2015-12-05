@@ -1,0 +1,38 @@
+<div class="well">
+<ul class="nav nav-pills">
+
+	<li class="active">
+		<a href="<?php echo $this->baseUrl().'/profiles/members/name/'.$this->profile_data->name?>"><?php echo $this->translate('Members');?> <span class="title-count"><?php echo $this->title_number;?></span></a>
+	</li>
+		
+</ul>
+</div>
+
+<?php if (isset($this->members) && !empty($this->members)) foreach($this->members as $member):?>
+<div class="well">
+
+	<div class="avatar small pull-left">
+		<a href="<?php echo $this->baseUrl().'/'.$member['name'];?>">
+			<img src="<?php echo $this->GetStorageUrl('avatar').$member['avatar'];?>">
+		</a>
+	</div>
+	
+	<div class="media-body">
+		<h5 class="media-heading">
+		
+		<a href="<?php echo $this->baseUrl().'/'.$member['name'];?>" class="pull-left"><?php echo $member['screen_name'];?></a> 
+			
+		</h5>
+		
+		<div class="pull-right">
+		 <?php if ($this->GetCurrentUserId() == $this->profile_data->owner || $this->HasRole('admin') || $this->HasRole('reviewer')):?>
+		  <a href="<?php echo $this->baseUrl()?>/connections/membership/name/<?php echo $member['name']?>/group/<?php echo $this->profile_data->name?>/do/leave"><?php echo $this->translate('Remove');?></a>
+		 <?php endif;?>
+		</div>
+
+	</div>
+
+</div>
+<?php endforeach;?>
+
+<?php echo $this->partial('/partial/pagination.phtml', array('pagination_last_page' => $this->pagination_last_page,'pagination_current_page' => $this->pagination_current_page));?>

@@ -1,0 +1,23 @@
+<?php echo $this->partial('/partial/images_submenu.phtml', array(
+		'profile_data' => $this->profile_data,
+		'total_images' => $this->total_images,
+		'total_albums' => $this->total_albums,
+		'action' => 'list_images',
+		'active_item' => $this->active_item,
+		'active_item_id' => (isset($this->active_item_id) ? $this->active_item_id : 0)
+		));?>
+
+<?php if (isset($this->images) && ! empty($this->images)):?>
+<div class="well">
+<?php foreach ($this->images as $image):?>
+<div class="well-images col-xs-12 col-sm-6 col-md-6"> 
+    <a href="#lightbox-modal" data-toggle="modal" class="thumbnail" data-context="<?php echo $this->context;?>" data-resource-id="<?php echo $image['id']?>">
+      <img class="img-responsive" src="<?php echo $this->GetStorageUrl('posts').$image['file_name']?>">
+      <div class="img-helper"></div>
+    </a>
+</div>
+<?php endforeach;?>
+</div>
+<?php endif;?>
+
+<?php echo $this->partial('/partial/pagination.phtml', array('pagination_last_page' => $this->pagination_last_page,'pagination_current_page' => $this->pagination_current_page));?>

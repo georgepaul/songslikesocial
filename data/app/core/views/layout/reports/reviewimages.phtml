@@ -1,0 +1,39 @@
+<?php if (isset($this->resources) && !empty($this->resources)) foreach($this->resources as $image):?>
+<div class="well single-report">
+
+	<div class="media-body">
+	
+		<a href="#lightbox-modal" data-toggle="modal" class="thumbnail" data-context="single" data-resource-id="<?php echo $image['image_id']?>">
+			<img src="<?php echo $this->GetStorageUrl('posts').$image['file_name']?>">
+    	</a>
+	
+	</div>
+	
+	<hr />
+	
+	<div class="pull-left">
+	<p><?php echo $image['reason'];?></p>
+	</div>
+	
+	<div class="pull-right">
+		<div class="avatar small pull-left">
+			<a href="<?php echo $this->baseUrl().'/'.$image['reported_by_name'];?>">
+				<img src="<?php echo $this->GetStorageUrl('avatar') . $image['reported_by_avatar'];?>">
+			</a>
+		</div>
+		<a href="<?php echo $this->baseUrl().'/'.$image['reported_by_name'];?>"><?php echo $image['reported_by_screen_name'];?></a>
+	<?php echo $this->GetTimeElapsedString($image['report_date']);?> 
+	</div>
+	
+	<div class="clearfix"></div>
+	
+	<div class="pull-right">
+	 <a data-mark-reported="0" data-report-id="<?php echo $image['id'];?>" class="btn btn-default admin-reported-btn"><?php echo $this->translate('Ignore');?></a>
+	 <a data-mark-reported="1" data-report-id="<?php echo $image['id'];?>" class="btn btn-warning admin-reported-btn"><?php echo $this->translate('Delete');?></a>
+	</div>
+
+
+</div>
+<?php endforeach;?>
+
+<?php echo $this->partial('/partial/pagination.phtml', array('pagination_last_page' => $this->pagination_last_page,'pagination_current_page' => $this->pagination_current_page));?>

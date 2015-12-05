@@ -1,0 +1,32 @@
+<form class="validate-ajax" action="<?php echo $this->escape($this->element->getAction()) ?>" method="<?php echo $this->escape($this->element->getMethod()) ?>" id="<?php echo $this->element->getId(); ?>">
+
+<?php echo $this->element->identifier; ?>
+
+<div style="display:none">
+<?php echo $this->element->id;?>
+</div>
+
+<?php
+$system_elements = array(
+	'identifier',
+	'formsubmit',
+	'id',
+);
+?>
+
+<?php foreach($this->element as $element):?>
+<?php if (in_array($element->getId(), $system_elements)) continue;?>
+<div class="form-group <?php echo $element->getId();?>">
+<label for="<?php echo $element->getId();?>"><?php echo $element->getLabel(); ?></label>
+<div class="<?php echo ($element->helper == 'formDate' ? 'dateinput' : '')?>"><?php echo $element->render(); ?></div>
+</div>
+<?php endforeach;?>
+
+<br/>
+<hr/>
+
+<div class="pull-right">
+<span><?php echo $this->element->formsubmit; ?></span>
+</div>
+
+</form>

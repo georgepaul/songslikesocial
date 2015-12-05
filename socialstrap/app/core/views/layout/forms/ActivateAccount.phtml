@@ -1,0 +1,28 @@
+<form action="<?php echo $this->escape($this->element->getAction()) ?>" method="<?php echo $this->escape($this->element->getMethod()) ?>" id="<?php echo $this->element->getId(); ?>">
+
+<?php echo $this->element->identifier; ?>
+<?php echo $this->element->csrf; ?>
+
+<?php if ($this->element->captcha): ?>
+<div class="form-group <?php echo $this->element->captcha->getId();?>">
+<?php echo $this->element->captcha;?>
+</div>
+<?php endif;?>
+
+<div class="embeded-text">
+<?php $this->setScriptPath($this->GetStaticContentPath());?>
+<?php echo $this->render('terms.phtml')?>
+</div>
+
+<div class="form-group checkbox <?php echo $this->element->confirm->getId();?>">
+<label for="<?php echo $this->element->confirm->getId();?>"><?php echo $this->element->confirm;?> <?php echo $this->element->confirm->getLabel(); ?></label>
+</div>
+
+<hr/>
+
+<div class="pull-right">
+<?php echo $this->element->activatesubmit; ?>
+</div>
+
+
+</form>

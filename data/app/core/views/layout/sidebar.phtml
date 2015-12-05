@@ -1,0 +1,10 @@
+
+<?php echo $this->render('/_sidebar/banner.phtml');?>
+
+<?php Zend_Registry::get('hooks')->trigger('hook_view_sidebar', $this); ?>
+
+<div class="well sidebarbox footerbox">
+<?php echo $this->render('/partial/footer.phtml');?>
+</div>
+
+

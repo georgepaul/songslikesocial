@@ -1,0 +1,52 @@
+<?php echo $this->render('_layout/header.phtml');?>
+
+<body>
+
+<?php echo $this->render('_layout/topmenu.phtml');?>
+
+<div class="container main">
+
+<?php echo $this->render('_layout/motd.phtml');?>
+
+<div class="row">
+
+<br />
+<br />
+
+<div class="col-md-6 col-md-offset-3">
+<?php echo $this->render('partial/alerts.phtml');?>
+
+	<div class="well">
+			<ul class="nav nav-tabs">
+			 <li class="active"><a href="#tab-login" data-toggle="tab"><?php echo $this->translate('Sign in');?></a></li>
+			 <li><a href="#tab-register" data-toggle="tab"><?php echo $this->translate('Create Account');?></a></li>
+			</ul>
+			
+			<div class="tab-content" id="myTabContent">
+				<div id="tab-login" class="tab-pane fade active in">
+				  	<div class="login-box">
+						<?php echo $this->modal_login_form;?>
+						<?php echo $this->modal_lostpassword_form;?>
+				  	</div>
+				</div>
+				<div id="tab-register" class="tab-pane fade">
+					  <div class="login-box">
+					    <?php echo $this->modal_register_form;?>
+					 </div>	
+				</div>
+			</div>
+	
+	</div>
+	
+	<div class="well footerbox">
+				<?php echo $this->render('/partial/footer.phtml');?>
+	</div>
+
+</div>
+
+</div>
+</div>
+
+<?php echo $this->render('_layout/end.phtml');?>
+
+ 
